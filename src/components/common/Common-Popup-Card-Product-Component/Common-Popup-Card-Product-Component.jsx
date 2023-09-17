@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
+import config from "../../../configs/config.env";
 import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CommonButtonComponent from '../Common-Button-Component/Common-Button-Component';
@@ -26,7 +27,7 @@ const CommonPopupCardProductComponent = (props) => {
                 <div className="row h-100 w-100">
                     <div className="col-5">
                         <div className={classes['card-product-thumbnail']}>
-                            <img src={`http://localhost:5000/${props.infor.images[0]}`} alt="product thumbnail" />
+                            <img src={`${config.URI}/${props.infor.images[0]}`} alt="product thumbnail" />
                         </div>
                     </div>
                     <div className="col-7">

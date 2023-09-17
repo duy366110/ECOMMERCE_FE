@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import config from "../../../../../configs/config.env";
 import classes from "./Main-Detail-Section-Thumbnail-Component.module.css";
 
 const MainDetailSectionThumbnailComponent = (props) => {
@@ -22,7 +23,7 @@ const MainDetailSectionThumbnailComponent = (props) => {
                             {props.list.length > 0 && props.list.map((image) => {
                                 return (
                                     <div key={image} id="thumbnail-list__item" data-thumb={image} onClick={viewThumbnailHandler} className={classes['thumbnail-list__item']}>
-                                        <img src={`http://localhost:5000/${image}`} alt="product" />
+                                        <img src={`${config.URI}/${image}`} alt="product" />
                                     </div>
                                 )
                             })}
@@ -30,7 +31,7 @@ const MainDetailSectionThumbnailComponent = (props) => {
                     </div>
                     <div className="col-10">
                         <div className={classes['product-thumbnail-master']}>
-                            <img src={`http://localhost:5000/${imageMain}`} alt="product" />
+                            <img src={`${config.URI}/${imageMain}`} alt="product" />
                         </div>
                     </div>
                 </div>

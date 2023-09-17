@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import config from "../../../../configs/config.env";
 import useValidation from "../../../../hook/use-validation";
 import useHttp from "../../../../hook/use-http";
 import { authSignin} from "../../../../store/store.auth";
@@ -59,7 +60,7 @@ const SignUpSectionComponent = (props) => {
             }
 
             httpMethod({
-                url: `http://localhost:5000/api/client/user/account`,
+                url: `${config.URI}/api/client/user/account`,
                 method: 'POST',
                 author: '',
                 payload: JSON.stringify(account)

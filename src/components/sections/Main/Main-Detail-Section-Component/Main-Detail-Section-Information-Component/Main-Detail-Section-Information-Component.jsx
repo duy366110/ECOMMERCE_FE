@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import config from "../../../../../configs/config.env";
 import useHttp from "../../../../../hook/use-http";
 import CommonButtonComponent from "../../../../common/Common-Button-Component/Common-Button-Component";
 import CommonQuantityComponent from "../../../../common/Common-Quantity-Component/Common-Quantity-Component";
@@ -30,7 +31,7 @@ const MainDetailSectionInformationComponent = (props) => {
         if(auth.token && auth.email) {
             if(quantity) {
                 httpMethod({
-                    url: `http://localhost:5000/api/client/cart`,
+                    url: `${config.URI}/api/client/cart`,
                     method: 'POST',
                     author: auth.token,
                     payload: JSON.stringify({product: props.information._id, quantity})

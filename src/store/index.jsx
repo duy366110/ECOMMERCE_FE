@@ -1,19 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import StoreAuth from "./store.auth";
-import Cart from "./store.cart";
-import Http from "./store-http";
-import Messenger from "./store-messenger";
-import Pagination from "./store-pagination";
+import AuthSlice from "./store.auth";
+import CartSlice from "./store.cart";
 import PopupSlice from "./store.popup";
 import SocketSlice from "./store.socket";
 
 const store = configureStore({
     reducer: {
-        auth: StoreAuth,
-        cart: Cart,
-        http: Http,
-        messenger: Messenger,
-        pagination: Pagination,
+        auth: AuthSlice,
+        cart: CartSlice,
         popup: PopupSlice,
         socket: SocketSlice
     }
