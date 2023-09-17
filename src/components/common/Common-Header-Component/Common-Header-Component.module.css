@@ -1,0 +1,84 @@
+.header-component {
+    padding: 10px 0px;
+    width: 100%;
+}
+
+.header-nav {
+    margin: 0px;
+    padding: 0px;
+}
+
+.header-nav li:not(:last-child) {
+    margin-right: 10px;
+}
+
+.header-nav li a {
+    color: #525252;
+    font-size: 1.5rem;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.header-nav li a:hover {
+    color: #525252;
+}
+
+.header-nav li a.active {
+    color: #e5c38c;
+}
+
+.header-logo {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0px;
+    text-align: center;
+    text-transform: uppercase;
+
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 0px;
+}
+
+.header-actions li:not(:last-child) {
+    margin-right: 10px;
+}
+
+.header-action--btn {
+    background-color: transparent;
+    border: unset;
+    display: flex;
+    align-items: center;
+    color: #525252;
+    font-size: 1.5rem;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.header-user-email {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    overflow: hidden;
+    margin-bottom: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 95px;
+}
+
+.header-action--btn:hover {
+    color: #e5c38c;
+}
+
+.header-action--btn svg {
+    fill: #aaaaaa;
+    height: 1.7rem;
+    width: 1.7rem;
+}
+
+.header-action--btn:hover svg {
+    fill: #e5c38c;
+}

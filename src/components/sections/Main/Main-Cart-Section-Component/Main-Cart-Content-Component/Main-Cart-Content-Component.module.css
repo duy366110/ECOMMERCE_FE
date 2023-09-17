@@ -1,0 +1,127 @@
+.cart-content-component {
+    padding: 4rem 0rem;
+    width: 100%;
+}
+
+.cart-content-warning {
+    background-color: var(--color-active);
+    color: #ffffff;
+    letter-spacing: .3px;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+.table-product thead tr th {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.table-product thead tr th:first-child {
+    width: 12rem;
+}
+
+.table-product tbody tr td {
+    border: unset;
+    font-size: 1.5rem;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.td-quantity {
+    width: 125px;
+}
+
+/* CART CONTENT NAVIGATION */
+.cart-content-navigation {
+    background-color: #f6f9f6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.btn-nav {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: var(--color-text-two);
+    display: block;
+    font-size: 1.5rem;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+
+.btn-nav:hover {
+    border: 1px solid #000000;
+    color: var(--color-text-two);
+}
+
+.btn-nav svg {
+    fill: var(--color-text-first);
+    font-weight: 3rem;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.btn-nav-previous svg {
+    transform: rotate(-180deg);
+}
+
+/* TABLE INFORMATION */
+.col-image img {
+    width: 9rem;
+}
+
+.td-quantity > div {
+    border: unset;
+}
+
+.del-product {
+    background-color: transparent;
+    border: unset;
+}
+
+.del-product svg {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+/* CART TOTAL */
+.cart-total {
+    background-color: var(--bg-color-first);
+    padding: 3.5rem;
+}
+
+.cart-total__title {
+    font-size: 2.5rem;
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+}
+
+.cart-total__price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-style: italic;
+    margin: 0px;
+    padding: 10px 0px;
+}
+
+.cart-total__price:not(:last-child) {
+    border-bottom: 1px solid #dddddd;
+}
+
+.cart-total__price:not(:last-child) span:last-child {
+    color: var(--color-text-two);
+    font-size: 1.7rem;
+}
+
+.cart-total__price span:first-child {
+    text-transform: uppercase;
+}

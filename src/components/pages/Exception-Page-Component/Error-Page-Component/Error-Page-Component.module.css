@@ -1,0 +1,25 @@
+.error-component {
+    background-color: #010f2f;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.error-title {
+    letter-spacing: .3px;
+    font-size: 4.5rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.error-sub-title {
+    letter-spacing: .3px;
+    font-size: 2rem;
+    margin-bottom: 0px;
+    text-align: center;
+    text-transform: capitalize;
+}

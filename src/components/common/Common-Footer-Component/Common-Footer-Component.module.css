@@ -1,0 +1,51 @@
+.footer-component {
+    background-color: #111111;
+    color: #ffffff;
+    padding: 5rem 0rem;
+    width: 100%;
+}
+
+.infor--title {
+    font-size: 1.6rem;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.infor--content {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.infor--content li:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.infor--content li a {
+    color: #525252;
+    font-size: 1.3rem;
+    font-style: italic;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+/* MESSENGER BTN */
+.messenger-btn  {
+    border: unset;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    outline: unset;
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 55px;
+    z-index: 205;
+}
+
+.messenger-btn img {
+    border-radius: 100%;
+    width: 100%;
+}

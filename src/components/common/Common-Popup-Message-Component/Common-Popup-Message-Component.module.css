@@ -1,0 +1,16 @@
+.common-popup-message-component {
+    background-color: #092a73;
+    left: 0px;
+    padding: 1rem;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+.common-popup-message-component p {
+    color: #ffffff;
+    font-size: 1.4rem;
+    margin-bottom: 0px;
+    text-align: center;
+    text-transform: capitalize;
+}

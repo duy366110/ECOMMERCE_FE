@@ -1,0 +1,39 @@
+.input-component {
+    width: -webkit-fill-available;
+}
+
+.form-group-custom {
+    width: 100%;
+}
+
+.input-label {
+    font-size: 1.4rem;
+    margin-bottom: .5rem;
+    text-transform: uppercase;
+}
+
+.form-group-custom input {
+    border-radius: unset;
+    font-size: 1.5rem;
+    padding: 1rem 2.5rem;
+}
+
+.form-group-custom input::placeholder {
+    text-transform: capitalize;
+}
+
+.form-group-custom input:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: var(--color-active);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem var(--color-active-outline);
+}
+
+.input-message {
+    color: #be0000;
+    display: block;
+    font-size: 1.2rem;
+    letter-spacing: .3px;
+    margin: 3px 0px 10px 0px;
+}

@@ -1,0 +1,39 @@
+.quantity-component {
+    border: 1px solid #8d8d8d;;
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    width: fit-content;
+}
+
+.quantity-label {
+    color: #8d8d8d;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-transform: uppercase;
+}
+
+.quantity-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quantity-btn {
+    background-color: transparent;
+    border: unset;
+}
+
+.quantity-btn svg {
+    font-size: 1.8rem;
+    height: 1.8rem!important;
+    width: 1.8rem!important;
+}
+
+.quantity-input, .quantity-input:focus-visible {
+    border: unset;
+    border-color: transparent;
+    outline: unset;
+    text-align: center;
+    width: 4.5rem;
+}

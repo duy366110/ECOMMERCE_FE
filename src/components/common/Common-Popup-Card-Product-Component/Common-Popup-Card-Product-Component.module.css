@@ -1,0 +1,82 @@
+.popup-card-product-component {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.card-product-mask {
+    background-color: #00000042;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.card-product-wrapper {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 545px;
+    overflow: hidden;
+    padding: 4.5rem;
+    position: relative;
+    width: 85%;
+    z-index: 100;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: unset;
+    outline: unset;
+    right: 2.5rem;
+    position: absolute;
+    top: 2.5rem;
+}
+
+.card-product-thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.card-product-thumbnail img {
+    height: 100%;
+    width: 100%;
+}
+
+.card-product-infor {
+    padding: 0rem 4rem;
+}
+
+.infor-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+    text-transform: capitalize;
+}
+
+.infor-price {
+    color: var(--color-text-two);
+    font-size: 1.8rem;
+    margin: 1rem 0rem;
+}
+
+.infor-des {
+    color: var(--color-text-two);
+    font-size: 1.3rem;
+    letter-spacing: .3px;
+    line-height: 2.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

@@ -1,0 +1,27 @@
+.main-transaction-section-component {
+    padding-bottom: 3.5rem;
+}
+
+.transaction-table {
+    border-collapse: collapse;
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+.transaction-table , .transaction-table thead th, .transaction-table tbody td {
+    border: 1px solid #aaaaaa;
+}
+
+.transaction-table thead th, .transaction-table tbody td {
+    padding: 10px;
+}
+
+.user-information-title, .order-total-price {
+    font-weight: 600;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+}
+
+.order-total-price td:last-child {
+    letter-spacing: .3px;
+}

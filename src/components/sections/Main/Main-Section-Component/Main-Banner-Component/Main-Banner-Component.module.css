@@ -1,0 +1,31 @@
+.banner-component {
+    background-size: cover;
+    background-position: center;
+    min-height: 450px;
+    padding: 20px;
+    position: relative;
+    width: 100%;
+}
+
+.banner-content {
+    max-width: 265px;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+}
+
+.sub-title {
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: .2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}

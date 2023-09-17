@@ -1,0 +1,65 @@
+:root {
+  --bg-color-first: #f6f9f6;
+  --bg-color-gradient: #3939390a;
+  --color-text-first: #313131;
+  --color-text-two: #8d8d8d;
+  --color-text-three: #212529;
+  --color-active: #e5c38c;
+  --color-active-outline: #e5c38c52;
+}
+
+html, body {
+  box-sizing: border-box;
+  font-size: 10px;
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* COMMON CSS */
+.section-sub-title {
+  color: #d3d9de;
+  letter-spacing: .3px;
+  font-size: 1.4rem;
+  font-style: italic;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: #383838;
+  letter-spacing: .3px;
+  font-size: 2rem;
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.product-blank {
+  color: var(--color-active);
+  font-size: 2.5rem;
+  padding: 4rem 0rem;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+/* FORM SUGGET */
+.text-sugget {
+  color: var(--color-text-two);
+  font-size: 1.5rem;
+  letter-spacing: .3px;
+}
+
+.text-sugget-link {
+  text-decoration: unset;
+}

@@ -1,0 +1,28 @@
+.product-thumbnail-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
+
+.thumbnail-list__item {
+    height: calc((100% / 4) - 10px);
+    width: 100%;
+}
+
+.thumbnail-list__item img {
+    height: 100%;
+    width: 100%;
+}
+
+.product-thumbnail-master {
+    height: 100%;
+    width: 100%;
+}
+
+.product-thumbnail-master img {
+    height: 100%;
+    width: 100%;
+}
