@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import config from "../../../../configs/config.env";
 import { loadCartInformation } from "../../../../store/store.cart";
 import CommonBreadcroumbComponent from "../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component";
 import MainCartContentComponent from "./Main-Cart-Content-Component/Main-Cart-Content-Component";
@@ -44,7 +45,7 @@ export const loader = () => {
                 if(user) {
                     user = JSON.parse(user);
 
-                    let res = await fetch("http://localhost:5000/api/client/cart", {
+                    let res = await fetch(`${config.URI}/api/client/cart`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

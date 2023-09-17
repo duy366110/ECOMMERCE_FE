@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import config from "../../../../configs/config.env";
 import CommonBreadcrumbComponent from "../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component";
 import classes from "./Main-Transaction-Section-Component.module.css";
 
@@ -103,7 +104,7 @@ export default  MainTransactionSectionComponent;
             if(user) {
                 user = JSON.parse(user);
 
-                let res = await fetch(`http://localhost:5000/api/client/transaction`, {
+                let res = await fetch(`${config.URI}/api/client/transaction`, {
                     method: 'GET',
                     headers: {
                         "Content-Type": 'application/json',

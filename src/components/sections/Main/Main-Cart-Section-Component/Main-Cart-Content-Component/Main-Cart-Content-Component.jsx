@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch }from "react-redux";
+import config from "../../../../../configs/config.env";
 import useHttp from "../../../../../hook/use-http";
 import useValidation from "../../../../../hook/use-validation";
 import { modifiProductInCart, increaseCoupon } from "../../../../../store/store.cart";
@@ -30,7 +31,7 @@ const MainCartContentComponent = (props) => {
 
         if(auth.token && id) {
             httpMethod({
-                url: `http://localhost:5000/api/client/cart/decrease`,
+                url: `${config.URI}/api/client/cart/decrease`,
                 method: 'PATCH',
                 author: auth.token,
                 payload: JSON.stringify({product: id})
@@ -50,7 +51,7 @@ const MainCartContentComponent = (props) => {
 
         if(auth.token && id) {
             httpMethod({
-                url: `http://localhost:5000/api/client/cart/increase`,
+                url: `${config.URI}/api/client/cart/increase`,
                 method: 'PATCH',
                 author: auth.token,
                 payload: JSON.stringify({product: id})
@@ -70,7 +71,7 @@ const MainCartContentComponent = (props) => {
 
         if(auth.token && id) {
             httpMethod({
-                url: `http://localhost:5000/api/client/cart/product`,
+                url: `${config.URI}/api/client/cart/product`,
                 method: 'DELETE',
                 author: auth.token,
                 payload: JSON.stringify({product: id})
@@ -118,7 +119,7 @@ const MainCartContentComponent = (props) => {
                                     return (
                                         <tr key={cartItem.product._id}>
                                             <td className={classes['col-image']}>
-                                                <img src={`http://localhost:5000/${cartItem.product.images[0]}`} alt="product_thumbnail" />
+                                                <img src={`${config.URI}/${cartItem.product.images[0]}`} alt="product_thumbnail" />
                                             </td>
 
                                             <td className="text-left">{cartItem.product.name}</td>

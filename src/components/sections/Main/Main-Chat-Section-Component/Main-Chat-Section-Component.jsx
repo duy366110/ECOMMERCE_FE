@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import config from "../../../../configs/config.env";
 import { shareSocket } from "../../../../store/store.socket";
 import useValidation from "../../../../hook/use-validation";
 import openSocket from "socket.io-client";
@@ -9,38 +10,6 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import SendIcon from '@mui/icons-material/Send';
 import classes from "./Main-Chat-Section-Component.module.css";
-
-
-const MESSENGER = [
-    {
-        type: 'client',
-        thumbnail: '/assets/images/client-blank.png',
-        content: {
-            message: 'Xin chào'
-        }
-    },
-    {
-        type: 'client',
-        thumbnail: '/assets/images/client-blank.png',
-        content: {
-            message: 'Làm thế nào để xem sản phẩm'
-        }
-    },
-    {
-        type: 'admin',
-        thumbnail: '/assets/images/client-blank.png',
-        content: {
-            message: 'chào bạn'
-        }
-    },
-    {
-        type: 'admin',
-        thumbnail: '/assets/images/client-blank.png',
-        content: {
-            message: 'Ban có thể vào mục Shop để xem sản phẩm'
-        }
-    }
-]
 
 const MainChatSectionComponent = (props) => {
     const navigate = useNavigate();
@@ -60,7 +29,7 @@ const MainChatSectionComponent = (props) => {
     // THỰC HIỆN KẾT NỐI CLIENT VỚI CHAT SERVER
     useEffect(() => {
         if(auth.token && popup.chat.status) {
-            const socket = openSocket("http://localhost:5000");
+            const socket = openSocket(`${config.SOCKET}`);
             socket.emit('client-connect', {token: auth.token});
             dispatch(shareSocket({socket}));
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLoaderData } from "react-router-dom";
+import config from "../../../../configs/config.env";
 import CommonProductCardComponent from '../../../common/Common-Product-Card-Component/Common-Product-Card-Component';
 import CommonBreadcrumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import MainDetailSectionThumbnailComponent from "./Main-Detail-Section-Thumbnail-Component/Main-Detail-Section-Thumbnail-Component";
@@ -101,7 +102,7 @@ export default MainDeatilSectionComponent;
 async function loadProductsSample (category) {
     return new Promise( async(resolve, reject) => {
         try {
-            let res = await fetch(`http://localhost:5000/api/client/category/${category}`, {
+            let res = await fetch(`${config.URI}/api/client/category/${category}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": 'application/json',
@@ -126,7 +127,7 @@ async function loadProductsSample (category) {
 async function loadProduct (product) {
     return new Promise( async(resolve, reject) => {
         try {
-            let res = await fetch(`http://localhost:5000/api/client/product/${product}`, {
+            let res = await fetch(`${config.URI}/api/client/product/${product}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": 'application/json',

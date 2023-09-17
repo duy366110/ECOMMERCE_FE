@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
+import config from "../../../../configs/config.env";
 import useHttp from '../../../../hook/use-http';
 import useValidation from "../../../../hook/use-validation";
 import { authSignin } from "../../../../store/store.auth";
@@ -33,7 +34,7 @@ const AuthSignInSectionComponent = (props) => {
         if(validEmail.status && passwordValid.status) {
 
             httpMethod({
-                url: `http://localhost:5000/api/auth/signin`,
+                url: `${config.URI}/api/auth/signin`,
                 method: 'POST',
                 author: '',
                 payload: JSON.stringify({email: emailValue, password: passwordValue})

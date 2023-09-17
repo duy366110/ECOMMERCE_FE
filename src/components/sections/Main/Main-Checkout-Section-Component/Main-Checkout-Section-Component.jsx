@@ -1,6 +1,7 @@
 import { useEffect, useState,  useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import config from "../../../../configs/config.env";
 import useHttp from "../../../../hook/use-http";
 import useValidation from "../../../../hook/use-validation";
 import CommonBreadcroumbComponent from "../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component";
@@ -72,7 +73,7 @@ const MainCheckoutSectionComponent = (props) => {
             }
 
             httpMethod({
-                url: `http://localhost:5000/api/client/order`,
+                url: `${config.URI}/api/client/order`,
                 method: 'POST',
                 author: auth.token,
                 payload: JSON.stringify(order)

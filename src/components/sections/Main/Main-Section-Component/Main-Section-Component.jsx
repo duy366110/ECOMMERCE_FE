@@ -1,5 +1,6 @@
 import React, { useEffect , useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import config from "../../../../configs/config.env";
 import MainBannerComponent from './Main-Banner-Component/Main-Banner-Component';
 import MainGenresComponent from './Main-Genres-Component/Main-Genres-Component';
 import CommonProductListComponent from '../../../common/Common-Product-List-Component/Common-Product-List-Component';
@@ -41,7 +42,7 @@ export const loader = () => {
     return new Promise(async (resolve, reject) => {
         try {
 
-            let res = await fetch("http://localhost:5000/api/client/product/15/0", {
+            let res = await fetch(`${config.URI}/api/client/product/15/0`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
