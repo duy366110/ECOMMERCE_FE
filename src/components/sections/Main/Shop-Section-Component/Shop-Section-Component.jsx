@@ -10,8 +10,6 @@ import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
 import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
 import classes from "./Shop-Section-Component.module.css";
 
-
-
 const ShopSectionComponent = (props) => {
     const loader = useLoaderData();
     const dispatch = useDispatch();
@@ -27,7 +25,20 @@ const ShopSectionComponent = (props) => {
 
     const loaderProductByType = (event) => {
         let { type } = event.target.dataset;
-        console.log(type);
+
+        httpMethod({
+            url: `${config.URI}/api/search/type/${type}`,
+            method: 'GET',
+            author: '',
+            payload: null
+        }, (information) => {
+
+            let { status, message, products} = information;
+            if(status) {
+                setProducts(products);
+
+            }
+        })
     }
     
     useEffect(() => {
