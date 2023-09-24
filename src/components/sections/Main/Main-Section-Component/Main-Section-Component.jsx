@@ -17,8 +17,24 @@ const MainSectionComponent = (props) => {
         let { status, message, products, categories, error} = loader;
 
         if(status) {
-            setCategories(categories);
             setProducts(products);
+
+            let categoriesRevert = [];
+            categories.map((category) => {
+                if(category.title === 'Iphone' || category.title === 'Mac') {
+                  if(category.title === 'Ihone') {
+                    categoriesRevert.unshift(category);
+                  } else {
+                    categoriesRevert.splice(1, 1, category);
+                  }
+                } else {
+                  categoriesRevert.push(category);
+                }
+                return category;
+                
+              });
+
+              setCategories(categoriesRevert);
         }
     }
 
