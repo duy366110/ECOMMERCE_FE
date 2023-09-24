@@ -25,7 +25,7 @@ const MainSectionComponent = (props) => {
                   if(category.title === 'Ihone') {
                     categoriesRevert.unshift(category);
                   } else {
-                    categoriesRevert.splice(1, 1, category);
+                    categoriesRevert.splice(1, 0, category);
                   }
                 } else {
                   categoriesRevert.push(category);
