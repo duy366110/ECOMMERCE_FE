@@ -10,7 +10,6 @@ const MainCheckoutSectionComponent = lazy(() => import("../components/sections/M
 const MainDeatilSectionComponent = lazy(() => import("../components/sections/Main/Main-Detail-Section-Component/Main-Detail-Section-Component"));
 const MainTransactionSectionComponent = lazy(() => import("../components/sections/Main/Main-Transaction-Section-Component/Main-Transaction-Section-Component"));
 const ShopSectionComponent = lazy(() => import("../components/sections/Main/Shop-Section-Component/Shop-Section-Component"));
-const ShopContentComponent = lazy(() => import("../components/sections/Main/Shop-Section-Component/Shop-Content-Component/Shop-Content-Component"));
 
 
 // EXCEPTION PAGE COMPONENT.
@@ -21,9 +20,6 @@ const NotFoundPageComponent = lazy(() => import("../components/pages/Exception-P
 const AuthPageComponent = lazy(() => import("../components/pages/Auth-Page-Component/Auth-Page-Component"));
 const AuthSignInSectionComponent = lazy(() => import("../components/sections/Auth/Auth-Sign-In-Section-Component/Auth-Sign-In-Section-Component"));
 const AuthSignUpSectionComponent = lazy(() => import("../components/sections/Auth/Auth-Sign-Up-Section-Component/Auh-Sign-Up-Section-Component"));
-
-
-
 
 const router = createBrowserRouter([
     {
@@ -62,17 +58,8 @@ const router = createBrowserRouter([
                     },
                     {
                         path: 'shop',
-                        element: <ShopSectionComponent />,
-                        children: [
-                            {
-                                index: true,
-                                element: <ShopContentComponent />
-                            },
-                            {
-                                path: ':genres',
-                                element: <ShopContentComponent />
-                            }
-                        ]
+                        loader: () => import("../components/sections/Main/Shop-Section-Component/Shop-Section-Component").then((m) => m.loader()),
+                        element: <Suspense fallback={<p>Loading...</p>}><ShopSectionComponent /></Suspense>
                     }
 
                 ]

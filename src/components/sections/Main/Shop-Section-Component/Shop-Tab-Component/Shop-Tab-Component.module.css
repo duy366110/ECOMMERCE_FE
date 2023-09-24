@@ -35,14 +35,19 @@
     padding: 0px;
 }
 
-.tab-list-content-list li a {
-    color: #919191;
+.tab-list-content-list li button {
+    background-color: #ffffff;
+    border: unset;
+    color: #6d6d6d;
     cursor: pointer;
     display: block;
     padding: 10px 15px;
     font-size: 1.4rem;
+    outline: unset;
+    text-align: left;
     text-decoration: unset;
     text-transform: capitalize;
+    width: 100%;
 }
 
 .active {

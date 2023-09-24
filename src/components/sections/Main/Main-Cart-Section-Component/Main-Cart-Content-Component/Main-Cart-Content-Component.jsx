@@ -154,7 +154,7 @@ const MainCartContentComponent = (props) => {
                         </table>
 
                         <div className={classes['cart-content-navigation']}>
-                            <NavLink to="/" className={`${classes['btn-nav']} ${classes['btn-nav-previous']}`}><ArrowRightAltIcon /><span>Continue shopping</span></NavLink>
+                            <NavLink to="/shop" className={`${classes['btn-nav']} ${classes['btn-nav-previous']}`}><ArrowRightAltIcon /><span>Continue shopping</span></NavLink>
                             {cartInfor.cart.length > 0 && (<NavLink to="/checkout" className={classes['btn-nav']}><span>Procced to checkout</span><ArrowRightAltIcon /></NavLink>)}
                         </div>
                     </div>
