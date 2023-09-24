@@ -23,7 +23,7 @@ const MainDetailSectionThumbnailComponent = (props) => {
                             {props.list.length > 0 && props.list.map((image) => {
                                 return (
                                     <div key={image} id="thumbnail-list__item" data-thumb={image} onClick={viewThumbnailHandler} className={classes['thumbnail-list__item']}>
-                                        <img src={`${config.URI}/${image}`} alt="product" />
+                                        <img src={image} alt="product" />
                                     </div>
                                 )
                             })}
@@ -31,7 +31,7 @@ const MainDetailSectionThumbnailComponent = (props) => {
                     </div>
                     <div className="col-10">
                         <div className={classes['product-thumbnail-master']}>
-                            <img src={`${config.URI}/${imageMain}`} alt="product" />
+                            <img src={imageMain} alt="product" />
                         </div>
                     </div>
                 </div>

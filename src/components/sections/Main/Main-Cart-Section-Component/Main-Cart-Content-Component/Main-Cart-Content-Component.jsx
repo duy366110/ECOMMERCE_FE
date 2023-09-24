@@ -119,7 +119,7 @@ const MainCartContentComponent = (props) => {
                                     return (
                                         <tr key={cartItem.product._id}>
                                             <td className={classes['col-image']}>
-                                                <img src={`${config.URI}/${cartItem.product.images[0]}`} alt="product_thumbnail" />
+                                                <img src={cartItem.product.images[0]} alt="product_thumbnail" />
                                             </td>
 
                                             <td className="text-left">{cartItem.product.name}</td>
