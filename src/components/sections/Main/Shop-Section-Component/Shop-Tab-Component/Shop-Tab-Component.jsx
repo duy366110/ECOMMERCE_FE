@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { NavLink } from 'react-router-dom';
+import React from "react";
 import classes from "./Shop-Tab-Component.module.css";
 
 const ShopTabComponent = (props) => {
@@ -19,7 +18,7 @@ const ShopTabComponent = (props) => {
                                         {type.values.length && type.values.map((infor) => {
                                             return (
                                                 <li key={`${infor.title}`}>
-                                                    <button>{infor.title}</button>
+                                                    <button onClick={props.changeType} data-type={infor._id? infor._id : 'all'}>{infor.title}</button>
                                                 </li>
                                             )
                                         })}
