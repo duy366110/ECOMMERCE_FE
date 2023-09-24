@@ -1,101 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useRouteLoaderData, useLocation,  useParams } from "react-router-dom";
-import _ from "lodash";
+import { Outlet, useRouteLoaderData, useLocation,  useParams, useLoaderData } from "react-router-dom";
+import config from "../../../../configs/config.env";
+import { GENRES, IPHONEANDMAC, WIRELESS, OTHER } from "../../../../data/data.constant";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
 import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
-// import SelectComponent from '../../../common/Input/Select-Component/Select-Component';
+import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
 import classes from "./Shop-Section-Component.module.css";
 
-const SORTS = [
-    {
-        title: "Default sorting",
-        value: "default"
-    },
-    {
-        title: "Category sorting",
-        value: "category"
-    },
-    {
-        title: "Price sorting",
-        value: "price"
-    }
-]
+
 
 const ShopSectionComponent = (props) => {
-    const loader = useRouteLoaderData('main-page-component');
-    const params = useParams();
-    const location = useLocation();
-    const [products , setProducts] = useState(loader);
-    const [searchValue, setSearchValue] = useState('');
-    const [sortvalue, setSortvalue] = useState('default');
+    const loader = useLoaderData();
 
+    const [products , setProducts] = useState([]);
+    
     useEffect(() => {
+        let { status, categories, products} = loader;
 
-        // Dựa vào caterogy trên url để lấy về danh sách sản phẩm phù hợp.
-        if(params.hasOwnProperty('genres') && params.genres !== "All") {
-            setProducts((pre) =>loader.filter((product) => product.category == params.genres.toLowerCase()));
+        if(status) {
+            for(let generes of GENRES) {
+                console.log(generes);
 
-        } else {
-            setProducts(loader);
+                if(generes.id === 1) {
+                    generes.values = categories.filter((elm) => IPHONEANDMAC.some((type) => type === elm.title));
+                }
+
+                if(generes.id === 2) {
+                    generes.values = categories.filter((elm) => WIRELESS.some((type) => type === elm.title));
+                }
+
+                if(generes.id === 3) {
+                    generes.values = categories.filter((elm) => OTHER.some((type) => type === elm.title));
+                }
+            }
+
+            setProducts(products);
         }
-
-    }, [location.pathname, params])
-
+    }, [])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
-    const searchHandler = (event) => {
-        let value = event.target.value;
-        setProducts((pre) => {
-            let mapper = pre;
-            if(value) {
-                mapper = mapper.filter((pro) => pro.name.toLowerCase().includes(value));
-
-            } else {
-                if(params.hasOwnProperty('genres')) {
-                    mapper = loader.filter((product) => product.category == params.genres.toLowerCase())
-                } else {
-                    // Nếu từ khoá được trả về empty sẽ load lại danh mục sản phẩm ban đầu.
-                    mapper = loader;
-                }
-            }
-
-            return mapper;
-        })
-
-        setSearchValue(event.target.value);
-    }
-
+    const searchHandler = (event) => { }
 
     // Dự vào option người dùng lựa chọn để sort.
-    const sortHandler = (event) => {
-        let value = event.target.value;
-        setProducts((pre) => {
-            let mapper = [];
-            let sort = [];
-            Object.assign(mapper, pre);
-
-            if(value !== 'default') {
-                if(value === 'category') {
-                    sort = mapper.sort((first, last) => (first[value] > last[value])? 1 : -1);
-                }
-
-                if(value === 'price') {
-                    sort = mapper.sort((first, last) => Number(first[value]) - Number(last[value]));
-                }
-                
-            } else {
-                // Sort sản phẩm nặc định theo giá.
-                sort = mapper.sort((first, last) => Number(last.price) - Number(first.price));
-            }
-
-            
-            return sort;
-        })
-
-        setSortvalue(value);
-    }
-
+    const sortHandler = (event) => { }
 
     return (
         <div className={classes['shop-component']}>
@@ -103,20 +51,16 @@ const ShopSectionComponent = (props) => {
             <div className="container">
                 <div className='row py-5'>
                     <div className="col-3">
-                        <ShopTabComponent/>
+                        <ShopTabComponent generes={GENRES}/>
                     </div>
                     
                     <div className="col-9">
                         <div className="row">
-                            <div className="col-6">
-                                <CommonInputComponent change={searchHandler} valueInput={searchValue} placeholder="Enter search here!"/>
-                            </div>
-                            <div className="col-6">
-                                {/* <SelectComponent change={sortHandler} list={SORTS} /> */}
-                            </div>
+                            <div className="col-6"></div>
+                            <div className="col-6"> </div>
                         </div>
 
-                        <Outlet context={{products}}/>
+                        <CommonProductListComponent products={products} hasTitle={false} />
                     </div>
                 </div>
             </div>
@@ -125,3 +69,68 @@ const ShopSectionComponent = (props) => {
 }
 
 export default ShopSectionComponent;
+
+// LOADER CATEGORY
+const loaderCategory = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let res = await fetch(`${config.URI}/api/client/category`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": ''
+                }
+            })
+
+            if(!res.ok) {
+                throw Error(await res.json());
+            }
+
+            resolve(await res.json());
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+// LOADER PRODUCTS
+const loaderProduct = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let res = await fetch(`${config.URI}/api/client/product/15/0`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": ''
+                }
+            })
+
+            if(!res.ok) {
+                throw Error(await res.json());
+            }
+
+            resolve(await res.json());
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+// LOADER THÔNG TIN MAIN SECTION
+export const loader = (request, params) => {
+    return new Promise( async(resolve, reject) => {
+        try {
+
+            let data = await Promise.all([loaderProduct(), loaderCategory()]);
+            let [{products}, {categories}] = data;
+            resolve({ status: true , products, categories });
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}

@@ -28,9 +28,9 @@ const CommonHeaderComponent = (props) => {
                             <li>
                                 <NavLink to="/" className={({isActive}) => (isActive? classes.active : '')} end>Home</NavLink>
                             </li>
-                            {/* <li>
+                            <li>
                                 <NavLink to='/shop' className={({isActive}) => (isActive? classes.active : '')}>Shop</NavLink>
-                            </li> */}
+                            </li>
                         </ul>
                     </div>
 
