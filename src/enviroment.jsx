@@ -1,10 +1,10 @@
 const ENVIRONMENT = {
     URL: {
-        DEV: 'http://localhost:5000',
+        DEV: 'http://localhost:8080',
         PRO: 'https://ecommercebe-5bbc136621ec.herokuapp.com'
     },
     SOCKET: {
-        DEV: 'http://localhost:5000',
+        DEV: 'http://localhost:8080',
         PRO: 'https://ecommercebe-5bbc136621ec.herokuapp.com'
     },
     MODEL: 'PRO' // DEV

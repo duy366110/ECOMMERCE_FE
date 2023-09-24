@@ -16,7 +16,7 @@ const CommonProductCardComponent = ({product}) => {
         <Link className={classes['product-card-component']} id='product-card-component' onClick={cardProductHandler}>
             <div className={classes['cart-wrapper']}>
                 <div className={classes['card-thumbnail-wrapper']}>
-                    <img src={`${config.URI}/${product.images[0]}`} alt="product thumbnail" />
+                    <img src={product.images[0]} alt="product thumbnail" />
                 </div>
                 <h2 className={classes['card-title']}>{product.name}</h2>
                 <p className={classes['card-price']}>{product.price.$numberDecimal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND</p>

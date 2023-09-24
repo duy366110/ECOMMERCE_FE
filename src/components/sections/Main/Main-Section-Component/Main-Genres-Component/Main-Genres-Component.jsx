@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Main-Genres-Component.module.css";
 
-const IMAGES = ['product_1.png', 'product_2.png', 'product_3.png', 'product_4.png', 'product_5.png'];
-
 const MainGenresComponent = (props) => {
 
     return  (
@@ -13,12 +11,12 @@ const MainGenresComponent = (props) => {
                 <h2 className="section-title text-center">Brpwse out categories</h2>
 
                 <div className="row">
-                    {IMAGES.length > 0 && IMAGES.map((image, index) => {
+                    {props.categories.length > 0 && props.categories.map((category, index) => {
                         return (
-                            <div key={index} className={(index <= 1)? "col-6" : 'col-4'}>
+                            <div key={category._id} className={(index <= 1)? "col-6" : 'col-4'}>
                                 <Link to="/shop">
                                     <div className={classes['card-genres']}>
-                                        <img src={`./assets/images/${image}`} alt="product" />
+                                        <img src={category.images[0]} alt="category" />
                                     </div>
                                 </Link>
                             </div>

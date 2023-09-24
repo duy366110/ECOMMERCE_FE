@@ -9,13 +9,15 @@ import classes from "./Main-Section-Component.module.css";
 
 const MainSectionComponent = (props) => {
     const loader  = useLoaderData();
+    const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
 
     // PHƯƠNG THỰC HIÊN MAP PRODUCT DATA.
     const mapperProduct = () => {
-        let { status, message, products, error} = loader;
+        let { status, message, products, categories, error} = loader;
 
         if(status) {
+            setCategories(categories);
             setProducts(products);
         }
     }
@@ -28,7 +30,7 @@ const MainSectionComponent = (props) => {
     return (
         <div className={classes['main-component']}>
             <MainBannerComponent />
-            <MainGenresComponent />
+            <MainGenresComponent categories={categories}/>
             <CommonProductListComponent products={products} hasTitle={true}/>
             <MainService />
         </div>
@@ -37,8 +39,33 @@ const MainSectionComponent = (props) => {
 
 export default MainSectionComponent;
 
+// LOADER CATEGORY
+const loaderCategory = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let res = await fetch(`${config.URI}/api/client/category`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": ''
+                }
+            })
+
+            if(!res.ok) {
+                throw Error(await res.json());
+            }
+
+            resolve(await res.json());
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 // LOADER PRODUCTS
-export const loader = () => {
+const loaderProduct = () => {
     return new Promise(async (resolve, reject) => {
         try {
 
@@ -55,6 +82,21 @@ export const loader = () => {
             }
 
             resolve(await res.json());
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+// LOADER THÔNG TIN MAIN SECTION
+export const loader = (request, params) => {
+    return new Promise( async(resolve, reject) => {
+        try {
+
+            let data = await Promise.all([loaderProduct(), loaderCategory()]);
+            let [{products}, {categories}] = data;
+            resolve({ status: true , products, categories });
 
         } catch (error) {
             reject(error);
