@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useRouteLoaderData, useLocation,  useParams, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 import { GENRES, IPHONEANDMAC, WIRELESS, OTHER } from "../../../../data/data.constant";
+import { loaderPagination } from "../../../../store/store.pagination";
+import useHttp from "../../../../hook/use-http";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
-import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
 import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
 import classes from "./Shop-Section-Component.module.css";
 
@@ -12,16 +14,29 @@ import classes from "./Shop-Section-Component.module.css";
 
 const ShopSectionComponent = (props) => {
     const loader = useLoaderData();
+    const dispatch = useDispatch();
+    const pagination = useSelector((state) => state.pagination);
 
+    const { httpMethod } = useHttp();
     const [products , setProducts] = useState([]);
+
+    // PHƯƠNG THỨC MAP PAGINATION
+    const mapPagination = (categories) => {
+            dispatch(loaderPagination({infor: categories}));
+    }
+
+    const loaderProductByType = (event) => {
+        let { type } = event.target.dataset;
+        console.log(type);
+    }
     
     useEffect(() => {
         let { status, categories, products} = loader;
 
         if(status) {
-            for(let generes of GENRES) {
-                console.log(generes);
+            mapPagination(categories);
 
+            for(let generes of GENRES) {
                 if(generes.id === 1) {
                     generes.values = categories.filter((elm) => IPHONEANDMAC.some((type) => type === elm.title));
                 }
@@ -37,6 +52,7 @@ const ShopSectionComponent = (props) => {
 
             setProducts(products);
         }
+
     }, [])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
@@ -51,7 +67,7 @@ const ShopSectionComponent = (props) => {
             <div className="container">
                 <div className='row py-5'>
                     <div className="col-3">
-                        <ShopTabComponent generes={GENRES}/>
+                        <ShopTabComponent changeType={loaderProductByType} generes={GENRES}/>
                     </div>
                     
                     <div className="col-9">
