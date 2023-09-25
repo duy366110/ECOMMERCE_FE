@@ -122,12 +122,13 @@ const ShopSectionComponent = (props) => {
                         <ShopTabComponent changeType={changeTypeHandler} generes={GENRES}/>
                     </div>
                     
-                    <div className="col-9">
+                    <div className="col-12 col-lg-9">
                         <div className="row">
-                            <div className="col-6">
+                            <div className="col-8 col-lg-12">
                                 <CommonInputComponent blur={blurSearchHandler} change={changeSearchHandler} placeholder="Search" value={search}/>
                             </div>
-                            <div className="col-6"> </div>
+
+                            <div className="col-4 d-block d-lg-none"></div>
                         </div>
 
                         <CommonProductListComponent products={products} hasTitle={false} />

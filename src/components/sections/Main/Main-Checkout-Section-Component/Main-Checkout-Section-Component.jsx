@@ -93,7 +93,7 @@ const MainCheckoutSectionComponent = (props) => {
             <div className="container">
                 <div className={classes['checkout-content']}>
                     <div className="row">
-                        <div className="col-8">
+                        <div className="col-12 col-lg-8">
                             <div className={classes['checkout-form']}>
                                 <form onSubmit={orderHandler}>
                                     <div className={classes["form-wrapper"]}>
@@ -151,7 +151,7 @@ const MainCheckoutSectionComponent = (props) => {
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col-12 col-lg-4">
                             <div className={classes['checkout-resum-information']}>
                                 <h2 className={classes['checkout-resum-title']}>Your order</h2>
                                 <ul className={classes['checkout-resum-CartProducts']}>

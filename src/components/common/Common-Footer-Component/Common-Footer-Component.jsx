@@ -23,7 +23,7 @@ const CommonFooterComponent = (props) => {
         <div className={classes['footer-component']}>
             <div className="container">
                 <div className="row">
-                    <div className="col-4">
+                    <div className="col-12 col-md-4 mb-5 md-md-0">
                         <div className={classes['footer-infor']}>
                             <h2 className={classes['infor--title']}>Customer services</h2>
                             <ul className={classes['infor--content']}>
@@ -42,7 +42,7 @@ const CommonFooterComponent = (props) => {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-12 col-md-4 mb-5 md-md-0">
                         <div className={classes['footer-infor']}>
                             <h2 className={classes['infor--title']}>Company</h2>
                             <ul className={classes['infor--content']}>
@@ -61,7 +61,7 @@ const CommonFooterComponent = (props) => {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-4">
+                    <div className="col-12 col-md-4 mb-5 md-md-0">
                         <div className={classes['footer-infor']}>
                             <h2 className={classes['infor--title']}>Social media</h2>
                             <ul className={classes['infor--content']}>
