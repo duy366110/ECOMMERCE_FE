@@ -17,22 +17,39 @@ const ShopSectionComponent = (props) => {
     const pagination = useSelector((state) => state.pagination);
 
     const { httpMethod } = useHttp();
+    const [type, setType] = useState('all');
     const [products , setProducts] = useState([]);
 
     // THAY ĐỔI TYPE SEARCH
     const changeTypeHandler = (event) => {
         let { type } = event.target.dataset;
-        dispatch(updateType({type}));
+        setType(type);
 
     }
 
     // LẤY THÔNG TIN VÀ CẬP NHẬT USER
     const searchProduct = async () => {
         let { amount} = loader;
-        dispatch(updateElementToTal({amount}));
+
+        if(type !== 'all') {
+            let category = pagination.category.find((elm) => elm.id === type)
+            dispatch(updateElementToTal({amount: category.amount, type}));
+
+        } else {
+            console.log(amount);
+            httpMethod({
+                url: `${config.URI}/api/client/product/amount`,
+                method: 'GET',
+                author: '',
+                payload: null
+            }, (infor) => {
+                let { status, message, amount } = infor;
+                dispatch(updateElementToTal({amount, type: 'all'}));
+            })
+        }
 
         httpMethod({
-            url: `${config.URI}/api/search/${pagination.current.type}/${pagination.current.itemPage}/${(pagination.current.itemPage * pagination.current.currentPage)}`,
+            url: `${config.URI}/api/search/${type}/${pagination.current.itemPage}/${(pagination.current.itemPage * pagination.current.currentPage)}`,
             method: 'GET',
             author: '',
             payload: null
@@ -64,7 +81,7 @@ const ShopSectionComponent = (props) => {
             }
         }
 
-    }, [pagination.current.type, pagination.current.currentPage])
+    }, [type, pagination.current.currentPage])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
     const searchHandler = (event) => { }
@@ -94,6 +111,7 @@ const ShopSectionComponent = (props) => {
                         </div>
 
                         <CommonProductListComponent products={products} hasTitle={false} />
+
                         <CommonPaginationComponent
                             click={paginationHandler}
                             items={ Array.from({length: pagination.current.elemtItemsPagination}, (elm, index) => index)} />
