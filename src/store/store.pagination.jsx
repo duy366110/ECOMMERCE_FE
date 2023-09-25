@@ -26,8 +26,7 @@ const paginationSlice = createSlice({
         },
         updateElementToTal: (state, action) => {
             let { amount, type } = action.payload;
-
-            console.log(amount);
+            
             state.current.type = type;
             state.current.elemtItemsPagination = Math.ceil(Number(amount) / state.current.itemPage);
         },

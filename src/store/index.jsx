@@ -4,6 +4,7 @@ import CartSlice from "./store.cart";
 import paginationSlice from "./store.pagination";
 import PopupSlice from "./store.popup";
 import SocketSlice from "./store.socket";
+import TableftSlice from "./store.tableft";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
         cart: CartSlice,
         pagination: paginationSlice,
         popup: PopupSlice,
-        socket: SocketSlice
+        socket: SocketSlice,
+        tableft: TableftSlice
     }
 })
 
