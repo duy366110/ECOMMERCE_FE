@@ -9,6 +9,7 @@ import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Co
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
 import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
 import CommonPaginationComponent from "../../../common/Common-Pagination-Component/Common-Pagination-Component";
+import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
 import classes from "./Shop-Section-Component.module.css";
 
 const ShopSectionComponent = (props) => {
@@ -18,6 +19,7 @@ const ShopSectionComponent = (props) => {
 
     const { httpMethod } = useHttp();
     const [type, setType] = useState('all');
+    const [search, setSearch] = useState('');
     const [products , setProducts] = useState([]);
 
     // THAY ĐỔI TYPE SEARCH
@@ -36,7 +38,6 @@ const ShopSectionComponent = (props) => {
             dispatch(updateElementToTal({amount: category.amount, type}));
 
         } else {
-            console.log(amount);
             httpMethod({
                 url: `${config.URI}/api/client/product/amount`,
                 method: 'GET',
@@ -84,10 +85,26 @@ const ShopSectionComponent = (props) => {
     }, [type, pagination.current.currentPage])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
-    const searchHandler = (event) => { }
+    const changeSearchHandler = (event) => {
+        setSearch(event.target.value);
+    }
 
     // Dự vào option người dùng lựa chọn để sort.
-    const sortHandler = (event) => { }
+    const blurSearchHandler = (event) => {
+        console.log(search);
+        httpMethod({
+            url: `${config.URI}/api/search/custom`,
+            method: 'POST',
+            author: '',
+            payload: JSON.stringify({search}),
+        }, (infor) => {
+            let { status, message, products } = infor;
+
+            if(products.length) {
+                setProducts(products);
+            }
+        })
+    }
 
     // SET SỰ KIỆN RENDER INFOR KHI LICK VÀO THANH PAGINATION
     const paginationHandler = (event) => {
@@ -106,7 +123,9 @@ const ShopSectionComponent = (props) => {
                     
                     <div className="col-9">
                         <div className="row">
-                            <div className="col-6"></div>
+                            <div className="col-6">
+                                <CommonInputComponent blur={blurSearchHandler} change={changeSearchHandler} placeholder="Search" value={search}/>
+                            </div>
                             <div className="col-6"> </div>
                         </div>
 
