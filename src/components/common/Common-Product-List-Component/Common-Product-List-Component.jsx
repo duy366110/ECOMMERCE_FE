@@ -17,7 +17,7 @@ const ProductListComponent = (props) => {
                 <div className="row">
                     {props.products.length > 0 && props.products.map((product, index) => {
                             return (
-                                <div key={index} className="col-3 d-flex">
+                                <div key={index} className="col-12 col-sm-6 col-lg-3 d-flex mb-3 mb-md-0">
                                     <CommonProductCardComponent product={product}/>
                                 </div>
                             )

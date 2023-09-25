@@ -82,3 +82,55 @@
 .header-action--btn:hover svg {
     fill: #e5c38c;
 }
+
+/* BUTTON TAB LEFT */
+.header-btn-tab-left {
+    background-color: transparent;
+    border: unset;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    outline: unset;
+    padding: 0px;
+    position: relative;
+    width: 40px;
+}
+
+.header-btn-tab-left span {
+    background-color: var(--color-active);
+    display: block;
+    height: 5px;
+    transition: all .3s ease;
+    width: 100%;
+}
+
+.header-btn-tab-left::before, .header-btn-tab-left::after {
+    background-color: var(--color-active);
+    content: '';
+    display: flex;
+    height: 5px;
+    left: 0px;
+    position: absolute;
+    transition: all .3s ease;
+    top: 0px;
+    width: 100%;
+}
+
+.header-btn-tab-left::after {
+    top: unset;
+    bottom: 0px;
+}
+
+.header-btn-tab-left.active::before {
+    top: 13px;
+    transform: rotate(30deg);
+}
+
+.header-btn-tab-left.active::after {
+    bottom: 13px;
+    transform: rotate(-30deg);
+}
+
+.header-btn-tab-left.active span {
+    opacity: 0;
+}

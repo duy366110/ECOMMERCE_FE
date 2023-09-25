@@ -13,7 +13,6 @@ const MainTransactionSectionComponent = (props) => {
     useEffect(() => {
         let { status, message, transactions } = loader;
         if(status) {
-            console.log(transactions);
             setTransactions(transactions);
         }
 

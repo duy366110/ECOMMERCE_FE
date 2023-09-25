@@ -20,6 +20,7 @@ const ShopSectionComponent = (props) => {
     const { httpMethod } = useHttp();
     const [type, setType] = useState('all');
     const [search, setSearch] = useState('');
+    const [hiddenPagination, setHiddenPagination] = useState(true);
     const [products , setProducts] = useState([]);
 
     // THAY ĐỔI TYPE SEARCH
@@ -31,8 +32,6 @@ const ShopSectionComponent = (props) => {
 
     // LẤY THÔNG TIN VÀ CẬP NHẬT USER
     const searchProduct = async () => {
-        let { amount} = loader;
-
         if(type !== 'all') {
             let category = pagination.category.find((elm) => elm.id === type)
             dispatch(updateElementToTal({amount: category.amount, type}));
@@ -91,19 +90,21 @@ const ShopSectionComponent = (props) => {
 
     // Dự vào option người dùng lựa chọn để sort.
     const blurSearchHandler = (event) => {
-        console.log(search);
-        httpMethod({
-            url: `${config.URI}/api/search/custom`,
-            method: 'POST',
-            author: '',
-            payload: JSON.stringify({search}),
-        }, (infor) => {
-            let { status, message, products } = infor;
-
-            if(products.length) {
-                setProducts(products);
-            }
-        })
+        if(search) {
+            httpMethod({
+                url: `${config.URI}/api/search/custom`,
+                method: 'POST',
+                author: '',
+                payload: JSON.stringify({search}),
+            }, (infor) => {
+                let { status, message, products } = infor;
+    
+                if(products.length) {
+                    setProducts(products);
+                    setHiddenPagination(false);
+                }
+            })
+        }
     }
 
     // SET SỰ KIỆN RENDER INFOR KHI LICK VÀO THANH PAGINATION
@@ -131,9 +132,9 @@ const ShopSectionComponent = (props) => {
 
                         <CommonProductListComponent products={products} hasTitle={false} />
 
-                        <CommonPaginationComponent
+                        {hiddenPagination && (<CommonPaginationComponent
                             click={paginationHandler}
-                            items={ Array.from({length: pagination.current.elemtItemsPagination}, (elm, index) => index)} />
+                            items={ Array.from({length: pagination.current.elemtItemsPagination}, (elm, index) => index)} />) }
                     </div>
                 </div>
             </div>

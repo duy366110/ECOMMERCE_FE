@@ -1,0 +1,56 @@
+.common-header-tab-left-component {
+    background-color: transparent;
+    height: 100%;
+    left: -100%;
+    position: fixed;
+    transition: all .3s ease;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.common-header-tab-left-component.active {
+    left: -0%;
+}
+
+.tab-left-mask {
+    background-color: #ffffff1c;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+}
+
+.tab-left-nav {
+    background-color: #efefef;
+    height: 100%;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    width: 250px;
+    z-index: 1;
+}
+
+.tab-left-nav li:not(:last-child) {
+    border-bottom: 1px solid var(--color-active);
+}
+
+.tab-left-nav li a {
+    color: #525252;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    padding: 10px 5px;
+    text-decoration: none;
+}
+
+.tab-left-logo a {
+    font-size: 20px!important;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.active {
+    color: #e5c38c!important;
+}
