@@ -53,3 +53,9 @@
 .breadcrumb-list li:last-child a {
     color: var(--color-text-two);
 }
+
+@media screen and (max-width: 912px) {
+    .breadcrumb-content {
+        flex-direction: column;
+    }
+}

@@ -101,57 +101,59 @@ const MainCartContentComponent = (props) => {
         <div className={classes['cart-content-component']}>
             <div className="container">
                 <div className="row">
-                    <div className="col-8">
-                        <table className={`${classes['table-product']} table mb-5`}>
-                            <thead>
-                                <tr>
-                                    <th scope="col">Images</th>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
-                                    <th scope="col">Remove</th>
-                                </tr>
-                            </thead>
-
-                            <tbody className={classes['cart-content-body']}>
-                                { cartInfor.cart.length > 0 && cartInfor.cart.map((cartItem, index) => {
-                                    return (
-                                        <tr key={cartItem.product._id}>
-                                            <td className={classes['col-image']}>
-                                                <img src={cartItem.product.images[0]} alt="product_thumbnail" />
-                                            </td>
-
-                                            <td className="text-left">{cartItem.product.name}</td>
-                                            <td>{cartItem.product.price.$numberDecimal.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND</td>
-                                            <td className={classes['td-quantity']}>
-                                                <CommonQuantityComponent id={cartItem.product._id} label="" remove={decreaseQuantityHandler} add={increaseQuantityHandler} quantity={cartItem.quantity} />
-                                            </td>
-                                            <td>
-                                                {cartItem.total} VND
-                                            </td>
-
-                                            <td>
-                                                <button className={classes['del-product']} id="del-product" onClick={removeProductOfCartHandler} data-id={cartItem.product._id}>
-                                                    <DeleteIcon />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    )})
-                                }
-
-                                {cartInfor.cart.length == 0 && (
+                    <div className="col-12 col-md-8 mb-5 mb-md-0">
+                        <div className={classes['cart-table-wrapper']}>
+                            <table className={`${classes['table-product']} table mb-5`}>
+                                <thead>
                                     <tr>
-                                        <td className={classes['col-image']}>null</td>
-                                        <td>null</td>
-                                        <td>null</td>
-                                        <td>null</td>
-                                        <td>null</td>
-                                        <td>null</td>
+                                        <th scope="col">Images</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Remove</th>
                                     </tr>
-                                )}
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody className={classes['cart-content-body']}>
+                                    { cartInfor.cart.length > 0 && cartInfor.cart.map((cartItem, index) => {
+                                        return (
+                                            <tr key={cartItem.product._id}>
+                                                <td className={classes['col-image']}>
+                                                    <img src={cartItem.product.images[0]} alt="product_thumbnail" />
+                                                </td>
+
+                                                <td className="text-left">{cartItem.product.name}</td>
+                                                <td>{cartItem.product.price.$numberDecimal.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND</td>
+                                                <td className={classes['td-quantity']}>
+                                                    <CommonQuantityComponent id={cartItem.product._id} label="" remove={decreaseQuantityHandler} add={increaseQuantityHandler} quantity={cartItem.quantity} />
+                                                </td>
+                                                <td>
+                                                    {cartItem.total} VND
+                                                </td>
+
+                                                <td>
+                                                    <button className={classes['del-product']} id="del-product" onClick={removeProductOfCartHandler} data-id={cartItem.product._id}>
+                                                        <DeleteIcon />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )})
+                                    }
+
+                                    {cartInfor.cart.length == 0 && (
+                                        <tr>
+                                            <td className={classes['col-image']}>null</td>
+                                            <td>null</td>
+                                            <td>null</td>
+                                            <td>null</td>
+                                            <td>null</td>
+                                            <td>null</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div className={classes['cart-content-navigation']}>
                             <NavLink to="/shop" className={`${classes['btn-nav']} ${classes['btn-nav-previous']}`}><ArrowRightAltIcon /><span>Continue shopping</span></NavLink>
@@ -159,7 +161,7 @@ const MainCartContentComponent = (props) => {
                         </div>
                     </div>
 
-                    <div className="col-4">
+                    <div className="col-12 col-md-4">
                         <div className={classes['cart-total']}>
                             <h2 className={classes['cart-total__title']}>Cart Total</h2>
 

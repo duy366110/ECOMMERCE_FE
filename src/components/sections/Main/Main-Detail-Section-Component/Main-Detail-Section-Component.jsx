@@ -57,11 +57,11 @@ const MainDeatilSectionComponent = (props) => {
 
                         {product && (
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-12 col-lg-6 mb-5 mb-lg-0">
                                     <MainDetailSectionThumbnailComponent list={product.images} />
                                 </div>
 
-                                <div className="col-6">
+                                <div className="col-12 col-lg-6">
                                     <MainDetailSectionInformationComponent information={product} />
                                 </div>
 

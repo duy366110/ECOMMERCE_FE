@@ -14,6 +14,11 @@
     text-transform: capitalize;
 }
 
+.cart-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
 .table-product thead tr th {
     font-size: 1.3rem;
     font-weight: 600;
@@ -51,7 +56,7 @@
     border: 1px solid transparent;
     color: var(--color-text-two);
     display: block;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     padding: 10px 10px;
     text-decoration: none;
 }
