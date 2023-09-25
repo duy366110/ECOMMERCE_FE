@@ -19,12 +19,16 @@ const paginationSlice = createSlice({
         loaderPagination: (state, action) => {
             let { infor } = action.payload;
             
+            state.category = [];
             for(let category of infor) {
                 state.category.push({id: category._id, title: category.title, amount: category.collections.length});
             }
         },
         updateElementToTal: (state, action) => {
-            let { amount } = action.payload;
+            let { amount, type } = action.payload;
+
+            console.log(amount);
+            state.current.type = type;
             state.current.elemtItemsPagination = Math.ceil(Number(amount) / state.current.itemPage);
         },
         updateCurrentPage: (state, action) => {
