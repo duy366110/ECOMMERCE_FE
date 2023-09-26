@@ -92,7 +92,7 @@ const MainCheckoutSectionComponent = (props) => {
             <CommonBreadcroumbComponent />
             <div className="container">
                 <div className={classes['checkout-content']}>
-                    <div className="row">
+                    <div className="row flex-column-reverse flex-lg-row">
                         <div className="col-12 col-lg-8">
                             <div className={classes['checkout-form']}>
                                 <form onSubmit={orderHandler}>
@@ -151,7 +151,7 @@ const MainCheckoutSectionComponent = (props) => {
                             </div>
                         </div>
 
-                        <div className="col-12 col-lg-4">
+                        <div className="col-12 col-lg-4 mb-5 mb-lg-0">
                             <div className={classes['checkout-resum-information']}>
                                 <h2 className={classes['checkout-resum-title']}>Your order</h2>
                                 <ul className={classes['checkout-resum-CartProducts']}>

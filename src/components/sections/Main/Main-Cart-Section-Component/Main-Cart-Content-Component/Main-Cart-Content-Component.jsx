@@ -100,7 +100,7 @@ const MainCartContentComponent = (props) => {
     return (
         <div className={classes['cart-content-component']}>
             <div className="container">
-                <div className="row">
+                <div className="row flex-column-reverse flex-lg-row">
                     <div className="col-12 col-md-8 mb-5 mb-md-0">
                         <div className={classes['cart-table-wrapper']}>
                             <table className={`${classes['table-product']} table mb-5`}>
@@ -161,7 +161,7 @@ const MainCartContentComponent = (props) => {
                         </div>
                     </div>
 
-                    <div className="col-12 col-md-4">
+                    <div className="col-12 col-md-4 mb-5 mb-lg-0">
                         <div className={classes['cart-total']}>
                             <h2 className={classes['cart-total__title']}>Cart Total</h2>
 
