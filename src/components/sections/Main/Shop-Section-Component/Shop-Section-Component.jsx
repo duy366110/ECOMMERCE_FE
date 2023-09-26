@@ -3,7 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 import { GENRES, IPHONEANDMAC, WIRELESS, OTHER } from "../../../../data/data.constant";
-import { toggleSideCategory } from "../../../../store/store.tableft";
+import { toggleSideCategory, closeSideCategory } from "../../../../store/store.tableft";
 import { loaderPagination, updateElementToTal,  updateCurrentPage, updateType } from "../../../../store/store.pagination";
 import useHttp from "../../../../hook/use-http";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
@@ -29,7 +29,7 @@ const ShopSectionComponent = (props) => {
     // THAY ĐỔI TYPE SEARCH
     const changeTypeHandler = (event) => {
         let { type } = event.target.dataset;
-        dispatch(toggleSideCategory());
+        dispatch(closeSideCategory());
         setType(type);
 
 
