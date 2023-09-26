@@ -54,3 +54,15 @@
 .active {
     color: #e5c38c!important;
 }
+
+/* ELEMENT IN TAB LEFT */
+.header-user-email {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    overflow: hidden;
+    margin-bottom: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 95px;
+}
