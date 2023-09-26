@@ -25,12 +25,12 @@ const CommonPopupCardProductComponent = (props) => {
                 </button>
 
                 <div className="row h-100 w-100">
-                    <div className="col-5">
+                    <div className="col-12 col-md-5">
                         <div className={classes['card-product-thumbnail']}>
                             <img src={props.infor.images[0]} alt="product thumbnail" />
                         </div>
                     </div>
-                    <div className="col-7">
+                    <div className="col-12 col-md-7">
                         <div className={classes['card-product-infor']}>
                             <h2 className={classes['infor-title']}>{props.infor.name}</h2>
                             <h3 className={classes['infor-price']}>{props.infor.price.$numberDecimal.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND</h3>

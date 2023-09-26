@@ -34,8 +34,8 @@ const MainService = (props) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-12 col-md-6">
-                            <h2 className={classes['support-title']}>Lest's be friends</h2>
-                            <p className={classes['support-sub-title']}>nisi nisi tempor consequat laboris nisi</p>
+                            <h2 className={`${classes['support-title']} text-center text-md-left`}>Lest's be friends</h2>
+                            <p className={`${classes['support-sub-title']} text-center text-md-left`}>nisi nisi tempor consequat laboris nisi</p>
                         </div>
                         <div className="col-12 col-md-6">
                             <div className={classes['support-form']}>
