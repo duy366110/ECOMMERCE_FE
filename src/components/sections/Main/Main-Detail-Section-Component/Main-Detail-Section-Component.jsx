@@ -80,7 +80,7 @@ const MainDeatilSectionComponent = (props) => {
                         <div className="row">
                             {product && productSample.length > 0 && productSample.map((productSample, index) => {
                                 return (
-                                    <div className="col-3" key={productSample._id}>
+                                    <div className="col-12 col-md-3" key={productSample._id}>
                                         <CommonProductCardComponent product={productSample}/>
                                     </div>
                                 )
