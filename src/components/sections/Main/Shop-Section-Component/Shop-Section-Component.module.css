@@ -1,3 +1,55 @@
 .shop-component {
     width: 100%;
 }
+
+/* TAB SIDE CATEGORY */
+.btn-side-tab-category {
+    background-color: transparent;
+    border: unset;
+    display: flex;
+    align-items: center;
+    height: 35px;
+    outline: unset;
+    padding: 0px;
+    position: relative;
+    transition: all 0.3s ease;
+    width: 45px;
+}
+
+.btn-side-tab-category span {
+    background-color: var(--color-active);
+    display: block;
+    height: 5px;
+    width: 100%;
+}
+
+.btn-side-tab-category::before, .btn-side-tab-category::after {
+    background-color: var(--color-active);
+    content: "";
+    display: block;
+    height: 5px;
+    left: 0px;
+    position: absolute;
+    transition: all .3s ease;
+    top: 0px;
+    width: 100%;
+}
+
+.btn-side-tab-category::after {
+    bottom: 0px;
+    top: unset;
+}
+
+.btn-side-tab-category.active span {
+    opacity: 0;
+}
+
+.btn-side-tab-category.active::before {
+    top: 15px;
+    transform: rotate(37deg);
+}
+
+.btn-side-tab-category.active::after {
+    bottom: 15px;
+    transform: rotate(-37deg);
+}

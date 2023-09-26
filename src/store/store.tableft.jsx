@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
-    status: false
+    status: false,
+    sidecategory: {
+        status: false
+    }
 }
 
 const tableftSlice = createSlice({
@@ -10,10 +13,13 @@ const tableftSlice = createSlice({
     reducers: {
         toggle: (state, action) => {
             state.status = !state.status;
+        },
+        toggleSideCategory: (state, action) => {
+            state.sidecategory.status = !state.sidecategory.status;
         }
     }
 })
 
-export const { toggle } = tableftSlice.actions;
+export const { toggle, toggleSideCategory } = tableftSlice.actions;
 
 export default tableftSlice.reducer;

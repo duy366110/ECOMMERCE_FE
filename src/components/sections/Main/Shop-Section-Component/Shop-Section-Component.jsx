@@ -3,10 +3,12 @@ import { useLoaderData } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 import { GENRES, IPHONEANDMAC, WIRELESS, OTHER } from "../../../../data/data.constant";
+import { toggleSideCategory } from "../../../../store/store.tableft";
 import { loaderPagination, updateElementToTal,  updateCurrentPage, updateType } from "../../../../store/store.pagination";
 import useHttp from "../../../../hook/use-http";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
+import ShopTabSideCategoryComponent from "./Shop-Tab-Side-Category-Component/Shop-Tab-Side-Category-Component";
 import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
 import CommonPaginationComponent from "../../../common/Common-Pagination-Component/Common-Pagination-Component";
 import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
@@ -16,6 +18,7 @@ const ShopSectionComponent = (props) => {
     const loader = useLoaderData();
     const dispatch = useDispatch();
     const pagination = useSelector((state) => state.pagination);
+    const tabLeft = useSelector((state) => state.tableft);
 
     const { httpMethod } = useHttp();
     const [type, setType] = useState('all');
@@ -26,7 +29,9 @@ const ShopSectionComponent = (props) => {
     // THAY ĐỔI TYPE SEARCH
     const changeTypeHandler = (event) => {
         let { type } = event.target.dataset;
+        dispatch(toggleSideCategory());
         setType(type);
+
 
     }
 
@@ -107,6 +112,11 @@ const ShopSectionComponent = (props) => {
         }
     }
 
+    // CHUYỂN ĐỔI TAB SIDE CATEGORY
+    const toggleSideCategoryHandler = (event) => {
+        dispatch(toggleSideCategory());
+    }
+
     // SET SỰ KIỆN RENDER INFOR KHI LICK VÀO THANH PAGINATION
     const paginationHandler = (event) => {
         let { pagi } = event.target.closest("#btn-pagi").dataset;
@@ -118,17 +128,25 @@ const ShopSectionComponent = (props) => {
             <BreadcroumbComponent />
             <div className="container">
                 <div className='row py-5'>
-                    <div className="col-3">
+                    <div className="col-3 d-none d-lg-block">
                         <ShopTabComponent changeType={changeTypeHandler} generes={GENRES}/>
                     </div>
                     
                     <div className="col-12 col-lg-9">
-                        <div className="row">
-                            <div className="col-8 col-lg-12">
+                        <div className="row align-items-center justify-content-between">
+                            <div className="col-10 col-lg-12">
                                 <CommonInputComponent blur={blurSearchHandler} change={changeSearchHandler} placeholder="Search" value={search}/>
                             </div>
 
-                            <div className="col-4 d-block d-lg-none"></div>
+                            <div className="col-2 d-flex justify-content-end d-lg-none">
+                                <button onClick={toggleSideCategoryHandler} className={`${classes['btn-side-tab-category']} ${tabLeft.sidecategory.status? classes['active'] : ''}`}>
+                                    <span></span>
+                                </button>
+                            </div>
+
+                            <ShopTabSideCategoryComponent>
+                                <ShopTabComponent changeType={changeTypeHandler} generes={GENRES}/>
+                            </ShopTabSideCategoryComponent>
                         </div>
 
                         <CommonProductListComponent products={products} hasTitle={false} />
