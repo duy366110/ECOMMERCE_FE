@@ -1,0 +1,24 @@
+.tab-side-category-component {
+    background-color: transparent;
+    height: 100%;
+    left: -100%;
+    position: fixed;
+    transition: all .3s ease;
+    top: 0px;
+    width: 100%;
+    z-index: 100;
+}
+
+.tab-side-category-mask {
+    background-color: #efefef;
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: -1;
+}
+
+.tab-side-category-component.active {
+    left: 0%;
+}
