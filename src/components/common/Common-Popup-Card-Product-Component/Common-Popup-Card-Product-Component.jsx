@@ -13,7 +13,8 @@ const CommonPopupCardProductComponent = (props) => {
     const viewDetailHandler = (event) => {
         const { id } = event.target.closest('#btn-common').dataset;
         const { category } = props.infor;
-        navigate(`/detail/${id}/${category._id}`);
+
+        navigate(`/detail/${id}/${category?._id? category?._id : category }`);
     }
 
     return ReactDOM.createPortal(
