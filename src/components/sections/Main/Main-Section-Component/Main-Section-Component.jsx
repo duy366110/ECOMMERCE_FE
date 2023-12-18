@@ -18,23 +18,7 @@ const MainSectionComponent = (props) => {
 
         if(status) {
             setProducts(products);
-
-            let categoriesRevert = [];
-            categories.map((category) => {
-                if(category.title === 'Iphone' || category.title === 'Mac') {
-                  if(category.title === 'Ihone') {
-                    categoriesRevert.unshift(category);
-                  } else {
-                    categoriesRevert.splice(1, 0, category);
-                  }
-                } else {
-                  categoriesRevert.push(category);
-                }
-                return category;
-                
-              });
-
-              setCategories(categoriesRevert);
+            setCategories(categories);
         }
     }
 
@@ -47,7 +31,7 @@ const MainSectionComponent = (props) => {
         <div className={classes['main-component']}>
             <MainBannerComponent />
             <MainGenresComponent categories={categories}/>
-            <CommonProductListComponent products={products} hasTitle={true}/>
+            {/* <CommonProductListComponent products={products} hasTitle={true}/> */}
             <MainService />
         </div>
     )
