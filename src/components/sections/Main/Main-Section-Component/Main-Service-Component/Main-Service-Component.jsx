@@ -39,7 +39,7 @@ const MainService = (props) => {
                         </div>
                         <div className="col-12 col-md-6">
                             <div className={classes['support-form']}>
-                                <InputComponent blur={onBlur} change={onChange} placeholder="Enter your email adress" valid={valid} value={value} clearBorderRadius={true} width="350px"/>
+                                <InputComponent blur={onBlur} change={onChange} placeholder="Enter your email adress" valid={valid} value={value} clearBorderRadius={true}/>
                                 <CommonButtonComponent style="btn-italic" variant="contained">Subscribe</CommonButtonComponent>
                             </div>
                         </div>
