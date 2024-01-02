@@ -61,7 +61,7 @@ const ShopSectionComponent = (props) => {
             setProducts(products);
         })
             dispatch(updateElementToTal({amount: category.amount, type}));
-        }, [httpMethod, dispatch, pagination, type, pagination.current.itemPage, pagination.current.currentPage])
+        }, [httpMethod, dispatch, pagination, type])
     
     useEffect(() => {
         let { status, categories} = loader;
