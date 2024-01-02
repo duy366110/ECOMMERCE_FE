@@ -37,7 +37,7 @@ const MainDetailSectionInformationComponent = (props) => {
                     payload: JSON.stringify({product: props.information._id, quantity})
                 }, (information) => {
 
-                    let { status, message} = information;
+                    let { status} = information;
                     if(status) {
                         navigate("/cart");
                     }

@@ -11,7 +11,7 @@ const MainTransactionSectionComponent = (props) => {
 
     // PHƯƠNG THỨC THỰC HIỆN LOAD VÀ MAPPẺ DATA
     useEffect(() => {
-        let { status, message, transactions } = loader;
+        let { status, transactions } = loader;
         if(status) {
             setTransactions(transactions);
         }

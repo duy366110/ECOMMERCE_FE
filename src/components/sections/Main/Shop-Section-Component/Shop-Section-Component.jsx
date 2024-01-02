@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useLoaderData } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 import { GENRES, IPHONEANDMAC, WIRELESS, OTHER } from "../../../../data/data.constant";
 import { toggleSideCategory, closeSideCategory } from "../../../../store/store.tableft";
-import { loaderPagination, updateElementToTal,  updateCurrentPage, updateType } from "../../../../store/store.pagination";
+import { loaderPagination, updateElementToTal,  updateCurrentPage } from "../../../../store/store.pagination";
 import useHttp from "../../../../hook/use-http";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
@@ -34,7 +34,7 @@ const ShopSectionComponent = (props) => {
     }
 
     // LẤY THÔNG TIN VÀ CẬP NHẬT USER
-    const searchProduct = async () => {
+    const searchProduct = useCallback(async () => {
         if(type !== 'all') {
             let category = pagination.category.find((elm) => elm.id === type)
             dispatch(updateElementToTal({amount: category.amount, type}));
@@ -60,7 +60,8 @@ const ShopSectionComponent = (props) => {
             let { products } = infor;
             setProducts(products);
         })
-    }
+            dispatch(updateElementToTal({amount: category.amount, type}));
+        }, [httpMethod, ])
     
     useEffect(() => {
         let { status, categories} = loader;
@@ -100,7 +101,7 @@ const ShopSectionComponent = (props) => {
                 author: '',
                 payload: JSON.stringify({search}),
             }, (infor) => {
-                let { status, message, products } = infor;
+                let { products } = infor;
     
                 if(products.length) {
                     setProducts(products);

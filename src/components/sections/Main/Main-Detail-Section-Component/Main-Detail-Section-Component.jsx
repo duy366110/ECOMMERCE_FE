@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useParams, useLoaderData } from "react-router-dom";
 import config from "../../../../configs/config.env";
 import CommonProductCardComponent from '../../../common/Common-Product-Card-Component/Common-Product-Card-Component';
@@ -16,7 +16,7 @@ const MainDeatilSectionComponent = (props) => {
     const [productSample, setProductSample] = useState([]);
 
     // PHƯƠNG THỰC HIÊN MAP PRODUCT VÀ CATEGORY DATA.
-    const mapperData = function() {
+    const mapperData = useCallback(function() {
 
         let { status, product, category} = loader;
 
@@ -42,7 +42,7 @@ const MainDeatilSectionComponent = (props) => {
                                     
             setProductSample(category.collections);
         }
-    }
+    }, [loader])
 
     useEffect(() => {
         mapperData();
