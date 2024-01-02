@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
-import config from "../../../configs/config.env";
 import CloseIcon from '@mui/icons-material/Close';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CommonButtonComponent from '../Common-Button-Component/Common-Button-Component';

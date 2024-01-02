@@ -9,7 +9,7 @@ const ErrorPageComponent = (props) => {
     useEffect(() => {
         console.error(error);
 
-    }, [])
+    }, [error])
 
     return (
         <div className={classes['error-component']}>
