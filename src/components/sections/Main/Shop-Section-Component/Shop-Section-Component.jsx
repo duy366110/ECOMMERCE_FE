@@ -31,8 +31,6 @@ const ShopSectionComponent = (props) => {
         let { type } = event.target.dataset;
         dispatch(closeSideCategory());
         setType(type);
-
-
     }
 
     // LẤY THÔNG TIN VÀ CẬP NHẬT USER
@@ -48,7 +46,7 @@ const ShopSectionComponent = (props) => {
                 author: '',
                 payload: null
             }, (infor) => {
-                let { status, message, amount } = infor;
+                let { amount } = infor;
                 dispatch(updateElementToTal({amount, type: 'all'}));
             })
         }
@@ -59,13 +57,13 @@ const ShopSectionComponent = (props) => {
             author: '',
             payload: null
         }, (infor) => {
-            let { status, message, products } = infor;
+            let { products } = infor;
             setProducts(products);
         })
     }
     
     useEffect(() => {
-        let { status, categories, amount} = loader;
+        let { status, categories} = loader;
 
         if(status) {
             searchProduct();
@@ -86,7 +84,7 @@ const ShopSectionComponent = (props) => {
             }
         }
 
-    }, [type, pagination.current.currentPage])
+    }, [type, searchProduct, dispatch, loader, pagination.current.currentPage])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
     const changeSearchHandler = (event) => {
