@@ -35,8 +35,8 @@ const ShopSectionComponent = (props) => {
 
     // LẤY THÔNG TIN VÀ CẬP NHẬT USER
     const searchProduct = useCallback(async () => {
+        let category = pagination.category.find((elm) => elm.id === type);
         if(type !== 'all') {
-            let category = pagination.category.find((elm) => elm.id === type)
             dispatch(updateElementToTal({amount: category.amount, type}));
 
         } else {
@@ -61,7 +61,7 @@ const ShopSectionComponent = (props) => {
             setProducts(products);
         })
             dispatch(updateElementToTal({amount: category.amount, type}));
-        }, [httpMethod, ])
+        }, [httpMethod])
     
     useEffect(() => {
         let { status, categories} = loader;
