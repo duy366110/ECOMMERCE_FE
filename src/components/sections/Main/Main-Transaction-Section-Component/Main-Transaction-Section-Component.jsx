@@ -16,7 +16,7 @@ const MainTransactionSectionComponent = (props) => {
             setTransactions(transactions);
         }
 
-    }, [])
+    }, [loader])
 
     return (
         <div className={classes['main-transaction-section-component']}>
