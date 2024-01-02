@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../../../../configs/config.env";
@@ -17,14 +17,14 @@ const MainCartSectionComponent = (props) => {
     // PHƯƠNG THỨC LOAD THÔNG CART CỦA USER
     useEffect(() => {
         if(auth.token) {
-            let { status, message, user} = loader;
+            let { user} = loader;
             dispatch(loadCartInformation({user}));
 
         } else {
             navigate('/auth');
         }
 
-    }, [])
+    }, [loader, dispatch, navigate])
 
     return (
         <div className={classes['cart-component']}>
