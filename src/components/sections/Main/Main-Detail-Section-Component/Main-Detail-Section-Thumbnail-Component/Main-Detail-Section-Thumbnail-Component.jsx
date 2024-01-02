@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import config from "../../../../../configs/config.env";
 import classes from "./Main-Detail-Section-Thumbnail-Component.module.css";
 
 const MainDetailSectionThumbnailComponent = (props) => {
@@ -12,7 +11,7 @@ const MainDetailSectionThumbnailComponent = (props) => {
 
     useEffect(() => {
         setImageMain(props.list[0]);
-    }, [props.list[0]])
+    }, [props.list])
 
     return (
         <div className={classes['thumbnail-component']}>

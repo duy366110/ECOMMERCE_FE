@@ -13,7 +13,7 @@ const ShopTabComponent = (props) => {
                         <div key={type.id} className={classes['tab-list-content']}>
                             {type.values.length > 0 && (
                                 <>
-                                    {type.title && index != 0 && <h4 className={classes['tab-list-content-title']}>{type.title}</h4>}
+                                    {type.title && index !== 0 && <h4 className={classes['tab-list-content-title']}>{type.title}</h4>}
                                     <ul className={classes['tab-list-content-list']}>
                                         {type.values.length && type.values.map((infor) => {
                                             return (
