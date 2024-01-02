@@ -4,6 +4,7 @@
 }
 
 .card-genres {
+    height: 580px;
     margin: 8px 0px;
     overflow: hidden;
     position: relative;
@@ -11,7 +12,10 @@
 }
 
 .card-genres img {
-    width: 100%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .card-genres-infor {
@@ -41,4 +45,8 @@
     text-align: center;
     word-break: break-word;
     width: 270px;
+}
+
+.color-white {
+    color: white;
 }

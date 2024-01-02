@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import config from "../../../../configs/config.env";
 import useHttp from '../../../../hook/use-http';
 import useValidation from "../../../../hook/use-validation";
@@ -14,8 +14,6 @@ const AuthSignInSectionComponent = (props) => {
 
     const emailRef = useRef();
     const passwordRef = useRef();
-
-    const auth = useSelector((state) => state);
 
     let { httpMethod } = useHttp();
     const {value: emailValue, valid: validEmail, onBlur: blurEmail, onChange: changeEmail} = useValidation(['require', 'email']);
@@ -39,7 +37,7 @@ const AuthSignInSectionComponent = (props) => {
                 author: '',
                 payload: JSON.stringify({email: emailValue, password: passwordValue})
             }, (information) => {
-                let { status, message, infor} = information;
+                let { status, infor} = information;
 
                 if(status) {
                     let { email, fullname, phone, role, username, address, token} = infor
