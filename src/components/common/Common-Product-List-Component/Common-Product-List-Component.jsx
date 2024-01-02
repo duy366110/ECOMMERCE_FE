@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import CommonProductCardComponent from '../Common-Product-Card-Component/Common-Product-Card-Component';
 import classes from "./Common-Product-List-Component.module.css";
 

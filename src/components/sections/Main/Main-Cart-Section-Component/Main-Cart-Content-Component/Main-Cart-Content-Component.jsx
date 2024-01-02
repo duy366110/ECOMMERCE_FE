@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch }from "react-redux";
 import config from "../../../../../configs/config.env";
@@ -15,7 +14,6 @@ import CommonButtonComponent from "../../../../common/Common-Button-Component/Co
 import classes from './Main-Cart-Content-Component.module.css';
 
 const MainCartContentComponent = (props) => {
-    const location = useLocation();
     const dispatch = useDispatch();
     const cartInfor = useSelector((state) => state.cart);
     const auth = useSelector((state) => state.auth);
@@ -37,7 +35,7 @@ const MainCartContentComponent = (props) => {
                 payload: JSON.stringify({product: id})
             }, (information) => {
     
-                let { status, message} = information;
+                let { status} = information;
                 if(status) {
                     dispatch(modifiProductInCart({product: id, type: 'decrease'}));
                 }
@@ -57,7 +55,7 @@ const MainCartContentComponent = (props) => {
                 payload: JSON.stringify({product: id})
             }, (information) => {
     
-                let { status, message} = information;
+                let { status} = information;
                 if(status) {
                     dispatch(modifiProductInCart({product: id, type: 'increase'}));
                 }
@@ -77,7 +75,7 @@ const MainCartContentComponent = (props) => {
                 payload: JSON.stringify({product: id})
             }, (information) => {
     
-                let { status, message} = information;
+                let { status} = information;
                 if(status) {
                     dispatch(modifiProductInCart({product: id, type: 'remove'}));
                 }
@@ -141,7 +139,7 @@ const MainCartContentComponent = (props) => {
                                         )})
                                     }
 
-                                    {cartInfor.cart.length == 0 && (
+                                    {cartInfor.cart.length === 0 && (
                                         <tr>
                                             <td className={classes['col-image']}>null</td>
                                             <td>null</td>
