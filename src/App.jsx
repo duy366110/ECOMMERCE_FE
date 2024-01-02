@@ -13,7 +13,7 @@ function App() {
     dispatch(cartReload());
     dispatch(authReload());
 
-  }, [])
+  }, [dispatch])
 
   return (
     <div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import config from "../../../configs/config.env";
 import CommonPopupCardProductComponent from '../Common-Popup-Card-Product-Component/Common-Popup-Card-Product-Component';
 import classes from "./Common-Product-Card-Component.module.css";
 

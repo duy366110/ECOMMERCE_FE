@@ -1,4 +1,3 @@
-import react from "react";
 import classes from "./Common-Popup-Message-Component.module.css";
 
 const CommonPopupMessageComponent = (props) => {

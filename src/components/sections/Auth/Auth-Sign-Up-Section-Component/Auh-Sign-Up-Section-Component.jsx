@@ -65,7 +65,7 @@ const SignUpSectionComponent = (props) => {
                 author: '',
                 payload: JSON.stringify(account)
             }, (information) => {
-                let { status, message, infor} = information;
+                let { status, infor} = information;
 
                 if(status) {
                     let { email, fullname, phone, role, username, token} = infor
