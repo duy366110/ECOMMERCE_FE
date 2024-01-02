@@ -12,7 +12,7 @@ const MainBannerComponent = (props)  => {
     }
 
     return (
-        <div className={classes['banner-component']} style={{backgroundImage: 'url("./assets/images/banner1.jpg")'}}>
+        <div className={classes['banner-component']}>
             <div className="container">
                 <div className={classes["banner-content"]}>
                     <p className={classes['sub-title']}>new inspiration 2020</p>
