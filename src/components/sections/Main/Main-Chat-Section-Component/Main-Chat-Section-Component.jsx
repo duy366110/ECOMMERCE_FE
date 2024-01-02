@@ -20,7 +20,7 @@ const MainChatSectionComponent = (props) => {
 
     const messageRef = useRef();
 
-    const {resetValue: messageResetVal, value: messageValue, valid: messageValid, onBlur: messageBlur, onChange: messageChange} = useValidation(['require']);
+    const {resetValue: messageResetVal, value: messageValue, onChange: messageChange} = useValidation(['require']);
 
     const [userChat, setUserChat] = useState(null);
 
@@ -55,7 +55,7 @@ const MainChatSectionComponent = (props) => {
             navigate("/auth");
         }
 
-    }, [])
+    }, [dispatch, auth.token, navigate, popup.chat.status])
 
     // THỰC HIỆN GỬI MESSAGE ĐẾN SERVER CHAT 
     const sendMessageHandler = (event) => {

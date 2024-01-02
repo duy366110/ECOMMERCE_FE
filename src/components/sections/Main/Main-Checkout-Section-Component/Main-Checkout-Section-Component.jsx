@@ -32,7 +32,7 @@ const MainCheckoutSectionComponent = (props) => {
     useEffect(() => {
         if(cartInfor.cart.length) {
             setCartProducts(cartInfor.cart);
-            let {fullname, username, email, phone, role, token, address } = auth;
+            let {fullname, email, phone, address } = auth;
 
             nameDef(fullname);
             emailDef(email);
@@ -43,7 +43,15 @@ const MainCheckoutSectionComponent = (props) => {
             navigate('/cart');
         }
 
-    }, [])
+    }, [
+        addressDef,
+        auth,
+        cartInfor.cart,
+        emailDef,
+        nameDef,
+        navigate,
+        phoneDef
+    ])
 
     // PHƯƠNG THỨC THỰC HIỆN ORDER SẢN PHẨM
     const orderHandler = (event) => {
@@ -79,7 +87,7 @@ const MainCheckoutSectionComponent = (props) => {
                 payload: JSON.stringify(order)
             }, (information) => {
     
-                let { status, message} = information;
+                let { status} = information;
                 if(status) {
                     navigate('/transaction');
                 }

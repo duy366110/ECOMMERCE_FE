@@ -34,7 +34,7 @@ const MainDeatilSectionComponent = (props) => {
             setDescription(des);
 
             // LỌC NHỮNG SẢN PHẨM TƯỢNG TỰ SẢN PHẨM CHÍNH
-            category.collections = category.collections.filter((pro) => pro._id != product._id)
+            category.collections = category.collections.filter((pro) => pro._id !== product._id)
                                     .map((pro) => {
                                         pro.category = product.category;
                                         return pro;
@@ -46,7 +46,7 @@ const MainDeatilSectionComponent = (props) => {
 
     useEffect(() => {
         mapperData();
-    }, [params.product_id, params.category_id])
+    }, [params.product_id, params.category_id, mapperData])
 
 
     return (
@@ -76,7 +76,6 @@ const MainDeatilSectionComponent = (props) => {
                         )}
 
                     <div className={classes['product-simlar']}>
-                        <h2 className={classes['product-similar-title']}></h2>
                         <div className="row">
                             {product && productSample.length > 0 && productSample.map((productSample, index) => {
                                 return (

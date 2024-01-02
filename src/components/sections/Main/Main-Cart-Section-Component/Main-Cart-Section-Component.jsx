@@ -24,7 +24,7 @@ const MainCartSectionComponent = (props) => {
             navigate('/auth');
         }
 
-    }, [loader, dispatch, navigate])
+    }, [loader, auth.token, dispatch, navigate])
 
     return (
         <div className={classes['cart-component']}>
