@@ -1,6 +1,6 @@
-import React from "react";
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+// import React from "react";
+// import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+// import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import classes from "./Common-Pagination-Component.module.css";
 
 const CommonPaginationComponent = (props) => {
@@ -10,9 +10,9 @@ const CommonPaginationComponent = (props) => {
             {props.items.length > 1 && (
                 <div className={classes['common-pagination-component']}>
                     <div className={classes['pagination-wrapper']}>
-                        <button className={`${classes['btn']} ${classes['btn-previous']}`} id="btn-pagi" onClick={props.click} data-pagi="previous">
+                        {/* <button className={`${classes['btn']} ${classes['btn-previous']}`} id="btn-pagi" onClick={props.click} data-pagi="previous">
                             <NavigateBeforeIcon />
-                        </button>
+                        </button> */}
 
                         <ul>
                             {props.items.map((elm, index) => {
@@ -20,8 +20,8 @@ const CommonPaginationComponent = (props) => {
                                     <li key={index}>
                                         <button
                                             className={`${classes['btn']}
-                                            ${classes['btn-item']}`} id="btn-pagi"
-                                            onClick={props.click} data-pagi={elm}>
+                                            ${classes['btn-item']}`} id="btn-page"
+                                            onClick={props.click} data-page={elm}>
 
                                             {elm + 1}
                                         </button>
@@ -30,9 +30,9 @@ const CommonPaginationComponent = (props) => {
                             })}
                         </ul>
 
-                        <button className={`${classes['btn']} ${classes['btn-next']}`} id="btn-pagi" onClick={props.click} data-pagi="next">
+                        {/* <button className={`${classes['btn']} ${classes['btn-next']}`} id="btn-pagi" onClick={props.click} data-pagi="next">
                             <NavigateNextIcon />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             )}

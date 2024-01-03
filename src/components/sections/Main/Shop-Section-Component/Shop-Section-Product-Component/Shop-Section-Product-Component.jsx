@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import config from "../../../../../configs/config.env";
+import { updateCurrentPage } from "../../../../../store/store.serach";
 import CommonProductCardComponent from "../../../../common/Common-Product-Card-Component/Common-Product-Card-Component";
+import CommonPaginationComponent from "../../../../common/Common-Pagination-Component/Common-Pagination-Component";
 import classes from "./Shop-Section-Product-Component.module.css";
 
 const ShopSectionProductComponent = (props) => {
     const search = useSelector((state) => state.search);
+    const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -32,9 +35,14 @@ const ShopSectionProductComponent = (props) => {
         http();
     }, [search])
 
+    const onPaginationHandler = (event) => {
+        let { page } = event.target.dataset;
+        dispatch(updateCurrentPage({page}));
+    }
+
     return (
         <div className={classes['shop-section-product-component']}>
-            {products.length > 0 && (
+            {search.amountProductOfType > 0 && products?.length > 0 && (
                 <div className="row">
                     {products.map((product) => {
                         return (
@@ -43,6 +51,12 @@ const ShopSectionProductComponent = (props) => {
                             </div>
                         )
                     })}
+
+                    <div className="col-12">
+                        <CommonPaginationComponent
+                        click={onPaginationHandler}
+                         items={ Array.from({length: search.elemtItemsPagination}, (elm, index) => index)} />
+                    </div>
                 </div>
             )}
 
