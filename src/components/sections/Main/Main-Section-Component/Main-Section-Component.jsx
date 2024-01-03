@@ -15,7 +15,6 @@ const MainSectionComponent = (props) => {
         let { status, featureds} = loader;
 
         if(status) {
-            console.log(featureds);
             setFeatureds(featureds);
         }
     }, [loader])
@@ -60,39 +59,13 @@ const loaderFeatured = () => {
     })
 }
 
-// LOADER PRODUCTS
-const loaderProduct = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-
-            let res = await fetch(`${config.URI}/api/client/product/15/0`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": ''
-                }
-            })
-
-            if(!res.ok) {
-                throw Error(await res.json());
-            }
-
-            resolve(await res.json());
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
-
 // LOADER THÔNG TIN MAIN SECTION
 export const loader = (request, params) => {
     return new Promise( async(resolve, reject) => {
         try {
-
-            let data = await Promise.all([loaderProduct(), loaderFeatured()]);
-            let [{products}, {featureds}] = data;
-            resolve({ status: true , products, featureds });
+            let data = await Promise.allSettled([loaderFeatured()]);
+            let [{value: {featureds}}] = data;
+            resolve({ status: true , featureds });
 
         } catch (error) {
             reject(error);
