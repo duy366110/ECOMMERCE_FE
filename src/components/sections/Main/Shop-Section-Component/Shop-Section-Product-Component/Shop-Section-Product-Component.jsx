@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../../../../../configs/config.env";
 import { updateCurrentPage } from "../../../../../store/store.serach";
+import { toggleLoader, openMessage, closeMessage } from "../../../../../store/store.popup";
 import CommonProductCardComponent from "../../../../common/Common-Product-Card-Component/Common-Product-Card-Component";
 import CommonPaginationComponent from "../../../../common/Common-Pagination-Component/Common-Pagination-Component";
 import classes from "./Shop-Section-Product-Component.module.css";
@@ -14,7 +15,8 @@ const ShopSectionProductComponent = (props) => {
     useEffect(() => {
         const http = async () => {
             try {
-                let url = `${config.URI}/api/search/${search.type}/${search.itemPage}/${search.currentPage}`;
+                dispatch(toggleLoader());
+                let url = `${config.URI}/api/search/${search.type}/${search.itemPage}/${search.currentPage * search.itemPage}`;
                 let res = await fetch(url, {
                     method: "GET",
                     headers: {
@@ -28,12 +30,16 @@ const ShopSectionProductComponent = (props) => {
                 }
 
             } catch (error) {
-
+                dispatch(openMessage({content: error?.message}));
+                setTimeout(() => {
+                    dispatch(closeMessage());
+                }, 2500)
             }
+            dispatch(toggleLoader());
         }
 
         http();
-    }, [search])
+    }, [search, dispatch])
 
     const onPaginationHandler = (event) => {
         let { page } = event.target.dataset;

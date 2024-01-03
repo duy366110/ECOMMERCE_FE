@@ -3,7 +3,8 @@ import { useLoaderData } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 import { mapperElement } from "../../../../store/store.generes";
-import { loaderInforSearch,updateTypeSearch } from "../../../../store/store.serach";
+import { loaderInforSearch, updateTypeSearch } from "../../../../store/store.serach";
+import { openMessage, closeMessage } from "../../../../store/store.popup";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
 import ShopSectionProductComponent from "./Shop-Section-Product-Component/Shop-Section-Product-Component";
@@ -18,7 +19,7 @@ const ShopSectionComponent = (props) => {
 
         const http = async () => {
             try {
-                let url = `${config.URI}/api/search/${type}`;
+                let url = `${config.URI}/api/search/product/amount?category=${type}`;
                 let res = await fetch(url, {
                     method: "GET",
                     headers: {
@@ -37,7 +38,10 @@ const ShopSectionComponent = (props) => {
                 }
 
             } catch (error) {
-               console.log(error);
+                dispatch(openMessage({content: error?.message}));
+                setTimeout(() => {
+                    dispatch(closeMessage());
+                }, 2500)
             }
         }
 
