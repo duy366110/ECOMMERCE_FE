@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLoaderData } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 // import { toggleSideCategory, closeSideCategory } from "../../../../store/store.tableft";
 // import { loaderPagination, updateElementToTal,  updateCurrentPage } from "../../../../store/store.pagination";
@@ -19,8 +19,6 @@ const ShopSectionComponent = (props) => {
     const dispatch = useDispatch();
     // const pagination = useSelector((state) => state.pagination);
     // const tabLeft = useSelector((state) => state.tableft);
-
-    const generes = useSelector((state) => state.generes);
 
     // const { httpMethod } = useHttp();
     // const [type, setType] = useState('all');
@@ -67,31 +65,10 @@ const ShopSectionComponent = (props) => {
         let { status, categories} = loader;
 
         if(status && categories.length > 0) {
-            for(let type of generes.categories) {
-                if(type.id === 1) {
-                    dispatch(mapperElement({
-                        type: 1,
-                        categories: categories.filter((elm) => generes.iphoneAndMac.some((type) => type === elm.title))
-                    }))
-                }
-
-                if(type.id === 2) {
-                    dispatch(mapperElement({
-                        type: 2,
-                        categories: categories.filter((elm) => generes.wireless.some((type) => type === elm.title))
-                    }))
-                }
-
-                if(type.id === 3) {
-                    dispatch(mapperElement({
-                        type: 3,
-                        categories: categories.filter((elm) => generes.other.some((type) => type === elm.title))
-                    }))
-                }
-            }
+            dispatch(mapperElement({categories}));
         }
 
-    }, [loader, dispatch, generes.categories, generes.iphoneAndMac, generes.wireless, generes.other])
+    }, [loader, dispatch])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
     // const changeSearchHandler = (event) => {

@@ -38,21 +38,20 @@ const generesSlice = createSlice({
     initialState: initState,
     reducers: {
         mapperElement: (state, action) => {
-            let { type, categories } = action.payload;
+            let { categories } = action.payload;
 
-            switch(type) {
-                case 3:
-                    state.categories[3].values = categories;
-                    break
+            for(let type of state.categories) {
+                if(type.id === 1) {
+                    state.categories[type.id].values = categories.filter((elm) => state.iphoneAndMac.some((type) => type === elm.title));
+                }
 
-                case 2:
-                    state.categories[2].values = categories;
-                    break
+                if(type.id === 2) {
+                    state.categories[type.id].values = categories.filter((elm) => state.wireless.some((type) => type === elm.title));
+                }
 
-                case 1:
-                default:
-                    state.categories[1].values = categories;
-                    break
+                if(type.id === 3) {
+                    state.categories[type.id].values = categories.filter((elm) => state.other.some((type) => type === elm.title));
+                }
             }
         }
     }
