@@ -2,108 +2,31 @@ import { useEffect } from 'react';
 import { useLoaderData } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
-// import { toggleSideCategory, closeSideCategory } from "../../../../store/store.tableft";
-// import { loaderPagination, updateElementToTal,  updateCurrentPage } from "../../../../store/store.pagination";
 import { mapperElement } from "../../../../store/store.generes";
-// import useHttp from "../../../../hook/use-http";
+import { loaderInforSearch } from "../../../../store/store.serach";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
-// import ShopTabSideCategoryComponent from "./Shop-Tab-Side-Category-Component/Shop-Tab-Side-Category-Component";
-// import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
-// import CommonPaginationComponent from "../../../common/Common-Pagination-Component/Common-Pagination-Component";
-// import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
+import ShopSectionProductComponent from "./Shop-Section-Product-Component/Shop-Section-Product-Component";
 import classes from "./Shop-Section-Component.module.css";
 
 const ShopSectionComponent = (props) => {
     const loader = useLoaderData();
     const dispatch = useDispatch();
-    // const pagination = useSelector((state) => state.pagination);
-    // const tabLeft = useSelector((state) => state.tableft);
-
-    // const { httpMethod } = useHttp();
-    // const [type, setType] = useState('all');
-    // const [search, setSearch] = useState('');
-    // const [hiddenPagination, setHiddenPagination] = useState(true);
-    // const [products , setProducts] = useState([]);
 
     const onChangeTypeHandler = (event) => {
         let { type } = event.target.dataset;
         console.log(type);
     }
-
-    // LẤY THÔNG TIN VÀ CẬP NHẬT USER
-    // const searchProduct = useCallback(async () => {
-    //     let category = pagination.category.find((elm) => elm.id === type);
-    //     if(type !== 'all') {
-    //         dispatch(updateElementToTal({amount: category.amount, type}));
-
-    //     } else {
-    //         httpMethod({
-    //             url: `${config.URI}/api/client/product/amount`,
-    //             method: 'GET',
-    //             author: '',
-    //             payload: null
-    //         }, (infor) => {
-    //             let { amount } = infor;
-    //             dispatch(updateElementToTal({amount, type: 'all'}));
-    //         })
-    //     }
-
-    //     httpMethod({
-    //         url: `${config.URI}/api/search/${type}/${pagination.current.itemPage}/${(pagination.current.itemPage * pagination.current.currentPage)}`,
-    //         method: 'GET',
-    //         author: '',
-    //         payload: null
-    //     }, (infor) => {
-    //         let { products } = infor;
-    //         setProducts(products);
-    //     })
-    //         dispatch(updateElementToTal({amount: category.amount, type}));
-    // }, [httpMethod, dispatch, pagination, type])
     
     useEffect(() => {
-        let { status, categories} = loader;
+        let { status, amountAllProduct, categories} = loader;
 
         if(status && categories.length > 0) {
+            dispatch(loaderInforSearch({amount: amountAllProduct}));
             dispatch(mapperElement({categories}));
         }
 
     }, [loader, dispatch])
-
-    // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
-    // const changeSearchHandler = (event) => {
-    //     setSearch(event.target.value);
-    // }
-
-    // Dự vào option người dùng lựa chọn để sort.
-    // const blurSearchHandler = (event) => {
-    //     if(search) {
-    //         httpMethod({
-    //             url: `${config.URI}/api/search/custom`,
-    //             method: 'POST',
-    //             author: '',
-    //             payload: JSON.stringify({search}),
-    //         }, (infor) => {
-    //             let { products } = infor;
-    
-    //             if(products.length) {
-    //                 setProducts(products);
-    //                 setHiddenPagination(false);
-    //             }
-    //         })
-    //     }
-    // }
-
-    // CHUYỂN ĐỔI TAB SIDE CATEGORY
-    // const toggleSideCategoryHandler = (event) => {
-    //     dispatch(toggleSideCategory());
-    // }
-
-    // SET SỰ KIỆN RENDER INFOR KHI LICK VÀO THANH PAGINATION
-    // const paginationHandler = (event) => {
-    //     let { pagi } = event.target.closest("#btn-pagi").dataset;
-    //     dispatch(updateCurrentPage({page: pagi}));
-    // }
 
     return (
         <div className={classes['shop-component']}>
@@ -113,30 +36,10 @@ const ShopSectionComponent = (props) => {
                     <div className="col-3 d-none d-lg-block">
                         <ShopTabComponent changeType={onChangeTypeHandler}/>
                     </div>
-                    
-                    {/* <div className="col-12 col-lg-9">
-                        <div className="row align-items-center justify-content-between">
-                            <div className="col-10 col-lg-12">
-                                <CommonInputComponent blur={blurSearchHandler} change={changeSearchHandler} placeholder="Search" value={search}/>
-                            </div>
 
-                            <div className="col-2 d-flex justify-content-end d-lg-none">
-                                <button onClick={toggleSideCategoryHandler} className={`${classes['btn-side-tab-category']} ${tabLeft.sidecategory.status? classes['active'] : ''}`}>
-                                    <span></span>
-                                </button>
-                            </div>
-
-                            <ShopTabSideCategoryComponent>
-                                <ShopTabComponent changeType={changeTypeHandler} generes={GENRES}/>
-                            </ShopTabSideCategoryComponent>
-                        </div>
-
-                        <CommonProductListComponent products={products} hasTitle={false} />
-
-                        {hiddenPagination && (<CommonPaginationComponent
-                            click={paginationHandler}
-                            items={ Array.from({length: pagination.current.elemtItemsPagination}, (elm, index) => index)} />) }
-                    </div> */}
+                    <div className="col-12 col-lg-9">
+                        <ShopSectionProductComponent />
+                    </div>
                 </div>
             </div>
         </div>
@@ -171,38 +74,38 @@ const loaderCategory = () => {
 }
 
 // LOADER PRODUCTS
-// const loaderProduct = () => {
-//     return new Promise(async (resolve, reject) => {
-//         try {
+const loaderProduct = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
 
-//             let res = await fetch(`${config.URI}/api/client/product/amount`, {
-//                 method: 'GET',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     "Authorization": ''
-//                 }
-//             })
+            let res = await fetch(`${config.URI}/api/client/product/amount`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": ''
+                }
+            })
 
-//             if(!res.ok) {
-//                 throw Error(await res.json());
-//             }
+            if(!res.ok) {
+                throw Error(await res.json());
+            }
 
-//             resolve(await res.json());
+            resolve(await res.json());
 
-//         } catch (error) {
-//             reject(error);
-//         }
-//     })
-// }
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
 
 // LOADER THÔNG TIN MAIN SECTION
 export const loader = (request, params) => {
     return new Promise( async(resolve, reject) => {
         try {
 
-            let data = await Promise.all([loaderCategory()]);
-            let [{categories}] = data;
-            resolve({ status: true , categories });
+            let data = await Promise.allSettled([loaderProduct(), loaderCategory()]);
+            let [{value:{amount}}, {value:{categories}}] = data;
+            resolve({ status: true , amountAllProduct: amount, categories });
 
         } catch (error) {
             reject(error);
