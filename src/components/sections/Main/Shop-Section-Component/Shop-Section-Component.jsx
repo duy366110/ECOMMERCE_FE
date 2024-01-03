@@ -1,126 +1,132 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLoaderData } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
-import { GENRES, IPHONEANDMAC, WIRELESS, OTHER } from "../../../../data/data.constant";
-import { toggleSideCategory, closeSideCategory } from "../../../../store/store.tableft";
-import { loaderPagination, updateElementToTal,  updateCurrentPage } from "../../../../store/store.pagination";
-import useHttp from "../../../../hook/use-http";
+// import { toggleSideCategory, closeSideCategory } from "../../../../store/store.tableft";
+// import { loaderPagination, updateElementToTal,  updateCurrentPage } from "../../../../store/store.pagination";
+import { mapperElement } from "../../../../store/store.generes";
+// import useHttp from "../../../../hook/use-http";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
-import ShopTabSideCategoryComponent from "./Shop-Tab-Side-Category-Component/Shop-Tab-Side-Category-Component";
-import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
-import CommonPaginationComponent from "../../../common/Common-Pagination-Component/Common-Pagination-Component";
-import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
+// import ShopTabSideCategoryComponent from "./Shop-Tab-Side-Category-Component/Shop-Tab-Side-Category-Component";
+// import CommonProductListComponent from "../../../common/Common-Product-List-Component/Common-Product-List-Component";
+// import CommonPaginationComponent from "../../../common/Common-Pagination-Component/Common-Pagination-Component";
+// import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
 import classes from "./Shop-Section-Component.module.css";
 
 const ShopSectionComponent = (props) => {
     const loader = useLoaderData();
     const dispatch = useDispatch();
-    const pagination = useSelector((state) => state.pagination);
-    const tabLeft = useSelector((state) => state.tableft);
+    // const pagination = useSelector((state) => state.pagination);
+    // const tabLeft = useSelector((state) => state.tableft);
 
-    const { httpMethod } = useHttp();
-    const [type, setType] = useState('all');
-    const [search, setSearch] = useState('');
-    const [hiddenPagination, setHiddenPagination] = useState(true);
-    const [products , setProducts] = useState([]);
+    const generes = useSelector((state) => state.generes);
 
-    // THAY ĐỔI TYPE SEARCH
-    const changeTypeHandler = (event) => {
+    // const { httpMethod } = useHttp();
+    // const [type, setType] = useState('all');
+    // const [search, setSearch] = useState('');
+    // const [hiddenPagination, setHiddenPagination] = useState(true);
+    // const [products , setProducts] = useState([]);
+
+    const onChangeTypeHandler = (event) => {
         let { type } = event.target.dataset;
-        dispatch(closeSideCategory());
-        setType(type);
+        console.log(type);
     }
 
     // LẤY THÔNG TIN VÀ CẬP NHẬT USER
-    const searchProduct = useCallback(async () => {
-        let category = pagination.category.find((elm) => elm.id === type);
-        if(type !== 'all') {
-            dispatch(updateElementToTal({amount: category.amount, type}));
+    // const searchProduct = useCallback(async () => {
+    //     let category = pagination.category.find((elm) => elm.id === type);
+    //     if(type !== 'all') {
+    //         dispatch(updateElementToTal({amount: category.amount, type}));
 
-        } else {
-            httpMethod({
-                url: `${config.URI}/api/client/product/amount`,
-                method: 'GET',
-                author: '',
-                payload: null
-            }, (infor) => {
-                let { amount } = infor;
-                dispatch(updateElementToTal({amount, type: 'all'}));
-            })
-        }
+    //     } else {
+    //         httpMethod({
+    //             url: `${config.URI}/api/client/product/amount`,
+    //             method: 'GET',
+    //             author: '',
+    //             payload: null
+    //         }, (infor) => {
+    //             let { amount } = infor;
+    //             dispatch(updateElementToTal({amount, type: 'all'}));
+    //         })
+    //     }
 
-        httpMethod({
-            url: `${config.URI}/api/search/${type}/${pagination.current.itemPage}/${(pagination.current.itemPage * pagination.current.currentPage)}`,
-            method: 'GET',
-            author: '',
-            payload: null
-        }, (infor) => {
-            let { products } = infor;
-            setProducts(products);
-        })
-            dispatch(updateElementToTal({amount: category.amount, type}));
-        }, [httpMethod, dispatch, pagination, type])
+    //     httpMethod({
+    //         url: `${config.URI}/api/search/${type}/${pagination.current.itemPage}/${(pagination.current.itemPage * pagination.current.currentPage)}`,
+    //         method: 'GET',
+    //         author: '',
+    //         payload: null
+    //     }, (infor) => {
+    //         let { products } = infor;
+    //         setProducts(products);
+    //     })
+    //         dispatch(updateElementToTal({amount: category.amount, type}));
+    // }, [httpMethod, dispatch, pagination, type])
     
     useEffect(() => {
         let { status, categories} = loader;
 
-        if(status) {
-            searchProduct();
-            dispatch(loaderPagination({infor: categories}));
-
-            for(let generes of GENRES) {
-                if(generes.id === 1) {
-                    generes.values = categories.filter((elm) => IPHONEANDMAC.some((type) => type === elm.title));
+        if(status && categories.length > 0) {
+            for(let type of generes.categories) {
+                if(type.id === 1) {
+                    dispatch(mapperElement({
+                        type: 1,
+                        categories: categories.filter((elm) => generes.iphoneAndMac.some((type) => type === elm.title))
+                    }))
                 }
 
-                if(generes.id === 2) {
-                    generes.values = categories.filter((elm) => WIRELESS.some((type) => type === elm.title));
+                if(type.id === 2) {
+                    dispatch(mapperElement({
+                        type: 2,
+                        categories: categories.filter((elm) => generes.wireless.some((type) => type === elm.title))
+                    }))
                 }
 
-                if(generes.id === 3) {
-                    generes.values = categories.filter((elm) => OTHER.some((type) => type === elm.title));
+                if(type.id === 3) {
+                    dispatch(mapperElement({
+                        type: 3,
+                        categories: categories.filter((elm) => generes.other.some((type) => type === elm.title))
+                    }))
                 }
             }
         }
 
-    }, [type, searchProduct, dispatch, loader, pagination.current.currentPage])
+    }, [loader, dispatch, generes.categories, generes.iphoneAndMac, generes.wireless, generes.other])
 
     // Dựa vào từ khoá người dùng nhập vào để tìm sản phẩm phù hợp.
-    const changeSearchHandler = (event) => {
-        setSearch(event.target.value);
-    }
+    // const changeSearchHandler = (event) => {
+    //     setSearch(event.target.value);
+    // }
 
     // Dự vào option người dùng lựa chọn để sort.
-    const blurSearchHandler = (event) => {
-        if(search) {
-            httpMethod({
-                url: `${config.URI}/api/search/custom`,
-                method: 'POST',
-                author: '',
-                payload: JSON.stringify({search}),
-            }, (infor) => {
-                let { products } = infor;
+    // const blurSearchHandler = (event) => {
+    //     if(search) {
+    //         httpMethod({
+    //             url: `${config.URI}/api/search/custom`,
+    //             method: 'POST',
+    //             author: '',
+    //             payload: JSON.stringify({search}),
+    //         }, (infor) => {
+    //             let { products } = infor;
     
-                if(products.length) {
-                    setProducts(products);
-                    setHiddenPagination(false);
-                }
-            })
-        }
-    }
+    //             if(products.length) {
+    //                 setProducts(products);
+    //                 setHiddenPagination(false);
+    //             }
+    //         })
+    //     }
+    // }
 
     // CHUYỂN ĐỔI TAB SIDE CATEGORY
-    const toggleSideCategoryHandler = (event) => {
-        dispatch(toggleSideCategory());
-    }
+    // const toggleSideCategoryHandler = (event) => {
+    //     dispatch(toggleSideCategory());
+    // }
 
     // SET SỰ KIỆN RENDER INFOR KHI LICK VÀO THANH PAGINATION
-    const paginationHandler = (event) => {
-        let { pagi } = event.target.closest("#btn-pagi").dataset;
-        dispatch(updateCurrentPage({page: pagi}));
-    }
+    // const paginationHandler = (event) => {
+    //     let { pagi } = event.target.closest("#btn-pagi").dataset;
+    //     dispatch(updateCurrentPage({page: pagi}));
+    // }
 
     return (
         <div className={classes['shop-component']}>
@@ -128,10 +134,10 @@ const ShopSectionComponent = (props) => {
             <div className="container">
                 <div className='row py-5'>
                     <div className="col-3 d-none d-lg-block">
-                        <ShopTabComponent changeType={changeTypeHandler} generes={GENRES}/>
+                        <ShopTabComponent changeType={onChangeTypeHandler}/>
                     </div>
                     
-                    <div className="col-12 col-lg-9">
+                    {/* <div className="col-12 col-lg-9">
                         <div className="row align-items-center justify-content-between">
                             <div className="col-10 col-lg-12">
                                 <CommonInputComponent blur={blurSearchHandler} change={changeSearchHandler} placeholder="Search" value={search}/>
@@ -153,7 +159,7 @@ const ShopSectionComponent = (props) => {
                         {hiddenPagination && (<CommonPaginationComponent
                             click={paginationHandler}
                             items={ Array.from({length: pagination.current.elemtItemsPagination}, (elm, index) => index)} />) }
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
@@ -188,38 +194,38 @@ const loaderCategory = () => {
 }
 
 // LOADER PRODUCTS
-const loaderProduct = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
+// const loaderProduct = () => {
+//     return new Promise(async (resolve, reject) => {
+//         try {
 
-            let res = await fetch(`${config.URI}/api/client/product/amount`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": ''
-                }
-            })
+//             let res = await fetch(`${config.URI}/api/client/product/amount`, {
+//                 method: 'GET',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     "Authorization": ''
+//                 }
+//             })
 
-            if(!res.ok) {
-                throw Error(await res.json());
-            }
+//             if(!res.ok) {
+//                 throw Error(await res.json());
+//             }
 
-            resolve(await res.json());
+//             resolve(await res.json());
 
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
+//         } catch (error) {
+//             reject(error);
+//         }
+//     })
+// }
 
 // LOADER THÔNG TIN MAIN SECTION
 export const loader = (request, params) => {
     return new Promise( async(resolve, reject) => {
         try {
 
-            let data = await Promise.all([loaderProduct(), loaderCategory()]);
-            let [{amount}, {categories}] = data;
-            resolve({ status: true , amount, categories });
+            let data = await Promise.all([loaderCategory()]);
+            let [{categories}] = data;
+            resolve({ status: true , categories });
 
         } catch (error) {
             reject(error);

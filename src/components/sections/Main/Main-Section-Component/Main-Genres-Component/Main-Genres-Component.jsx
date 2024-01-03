@@ -11,7 +11,7 @@ const MainGenresComponent = (props) => {
                 <h2 className="section-title text-center">Brpwse out categories</h2>
 
                 <div className="row">
-                    {props.featureds.length > 0 && props.featureds.map((feature, index) => {
+                    {props.featureds?.length > 0 && props.featureds.map((feature, index) => {
                         return (
                             <div key={feature._id} className="col-12 col-md-6">
                                 <Link to="/shop">

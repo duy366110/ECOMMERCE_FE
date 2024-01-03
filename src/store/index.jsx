@@ -5,6 +5,8 @@ import paginationSlice from "./store.pagination";
 import PopupSlice from "./store.popup";
 import SocketSlice from "./store.socket";
 import TableftSlice from "./store.tableft";
+import SearchSlice from "./store.serach";
+import generesSlice from "./store.generes";
 
 const store = configureStore({
     reducer: {
@@ -13,7 +15,9 @@ const store = configureStore({
         pagination: paginationSlice,
         popup: PopupSlice,
         socket: SocketSlice,
-        tableft: TableftSlice
+        tableft: TableftSlice,
+        search: SearchSlice,
+        generes: generesSlice,
     }
 })
 
