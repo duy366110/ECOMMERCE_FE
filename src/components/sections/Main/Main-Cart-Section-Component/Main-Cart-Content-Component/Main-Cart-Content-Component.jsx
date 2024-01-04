@@ -2,9 +2,8 @@ import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch }from "react-redux";
 import config from "../../../../../configs/config.env";
-import useHttp from "../../../../../hook/use-http";
 import useValidation from "../../../../../hook/use-validation";
-import { modifiProductInCart, increaseCoupon } from "../../../../../store/store.cart";
+import { increaseCoupon } from "../../../../../store/store.cart";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
@@ -14,70 +13,59 @@ import CommonButtonComponent from "../../../../common/Common-Button-Component/Co
 import classes from './Main-Cart-Content-Component.module.css';
 
 const MainCartContentComponent = (props) => {
+    const worker = new Worker("assets/js/cart-worker.js");
     const dispatch = useDispatch();
     const cartInfor = useSelector((state) => state.cart);
     const auth = useSelector((state) => state.auth);
 
     const couponRef = useRef();
-
-    const { httpMethod } = useHttp();
     const {resetValue: couponResetValue, value: couponValue, valid: couponValid, onBlur: couponBlur, onChange: couponChange} = useValidation([]);
 
-     // PHƯƠNG THỨC GIẢM SỐ LƯỢNG SẢN PHẨM.
-    const decreaseQuantityHandler = (event) => {
-        let { id } = event.target.closest('#remove-product').dataset; // decrease
-
-        if(auth.token && id) {
-            httpMethod({
-                url: `${config.URI}/api/client/cart/decrease`,
-                method: 'PATCH',
-                author: auth.token,
-                payload: JSON.stringify({product: id})
-            }, (information) => {
-    
-                let { status} = information;
-                if(status) {
-                    dispatch(modifiProductInCart({product: id, type: 'decrease'}));
-                }
-            })
-        }
-    }
-
-    // PHƯƠNG THỨC THÊM SỐ LƯỢNG SẢN PHẨM.
-    const increaseQuantityHandler = (event) => {
-        let { id } = event.target.closest('#add-product').dataset;
-
-        let worker = new Worker("assets/js/cart-worker.js");
+    const workerMethod = (infor = {
+        type: "",
+        url: "",
+        payload: null
+    }) => {
         worker.postMessage({
-            type: "increment-product-cart",
-            url: `${config.URI}/api/client/cart/increase`,
+            type: infor.type,
+            url: infor.url,
             token: `Bearer ${auth.token}`,
-            payload: {product: id}
+            payload: infor.payload
         })
 
         worker.onmessage = (value) => {
             window.location.reload();
         }
     }
+
+     // DECREMENT PRODUCT IN CART.
+    const decreaseQuantityHandler = (event) => {
+        let { id } = event.target.closest('#remove-product').dataset;
+        workerMethod({
+            type: "decrement-product-cart",
+            url: `${config.URI}/api/client/cart/decrease`,
+            payload: {product: id}
+        });
+    }
+
+    // INCREMENT PRODUCT IN CART.
+    const increaseQuantityHandler = (event) => {
+        let { id } = event.target.closest('#add-product').dataset;
+        workerMethod({
+            type: "increment-product-cart",
+            url: `${config.URI}/api/client/cart/increase`,
+            payload: {product: id}
+        });
+    }
     
     // PHƯƠNG THỨC XOÁ SẢN PHẨM KHỎI DANH MỤC CART CỦA USER.
     const removeProductOfCartHandler = (event) => {
         let { id } = event.target.closest('#del-product').dataset;
-
-        if(auth.token && id) {
-            httpMethod({
-                url: `${config.URI}/api/client/cart/product`,
-                method: 'DELETE',
-                author: auth.token,
-                payload: JSON.stringify({product: id})
-            }, (information) => {
-    
-                let { status} = information;
-                if(status) {
-                    dispatch(modifiProductInCart({product: id, type: 'remove'}));
-                }
-            })
-        }
+        workerMethod({
+            type: "remove-product-in-cart",
+            url: `${config.URI}/api/client/cart/product`,
+            payload: {product: id}
+        });
     }
 
     // PHƯƠNG THỨC THÊM COUPON

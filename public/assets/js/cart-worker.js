@@ -26,9 +26,12 @@ onmessage = async (event) => {
     switch(type) {
 
         case "increment-product-cart":
-            console.log(payload);
-            console.log(token);
+        case "decrement-product-cart":
             postMessage(await processGetCart(url, token, "PATCH", JSON.stringify(payload)));
+            break
+
+        case "remove-product-in-cart":
+            postMessage(await processGetCart(url, token, "DELETE", JSON.stringify(payload)));
             break
 
         case "get-cart":
