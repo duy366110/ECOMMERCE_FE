@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../../../../../configs/config.env";
-import { updateCurrentPage } from "../../../../../store/store.serach";
+import { updateCurrentPage, previousPage, nextPage } from "../../../../../store/store.serach";
 import { toggleLoader, openMessage, closeMessage } from "../../../../../store/store.popup";
 import CommonProductCardComponent from "../../../../common/Common-Product-Card-Component/Common-Product-Card-Component";
 import CommonPaginationComponent from "../../../../common/Common-Pagination-Component/Common-Pagination-Component";
@@ -44,16 +44,15 @@ const ShopSectionProductComponent = (props) => {
 
     const onPaginationHandler = (event) => {
         let { page } = event.target.dataset;
-        // let ul = event.target.parentElement.parentElement;
-        // ul.childNodes.forEach((li, index) => {
-        //     li.classList.remove("pagi-item-active");
-        //     if(index === search.currentPage) {
-        //         li.classList.add("pagi-item-active")
-        //     }
-
-        //     console.log(li);
-        // })
         dispatch(updateCurrentPage({page}));
+    }
+
+    const onNextPageHandler = () => {
+        dispatch(nextPage());
+    }
+
+    const onPreviousHandler = (event) => {
+        dispatch(previousPage());
     }
 
     return (
@@ -71,6 +70,8 @@ const ShopSectionProductComponent = (props) => {
                     <div className="col-12">
                         <CommonPaginationComponent
                         click={onPaginationHandler}
+                        previous={onPreviousHandler}
+                        next={onNextPageHandler}
                          items={ Array.from({length: search.elemtItemsPagination}, (elm, index) => index)} />
                     </div>
                 </div>

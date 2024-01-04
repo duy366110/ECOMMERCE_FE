@@ -6,13 +6,6 @@ import classes from "./Common-Pagination-Component.module.css";
 const CommonPaginationComponent = (props) => {
 
     const search = useSelector((state) => state.search);
-    const onNextHandler = () => {
-        console.log("Next");
-    }
-
-    const onPreviousHandler = () => {
-        console.log("Previous");
-    }
 
     return (
         <div>
@@ -22,7 +15,7 @@ const CommonPaginationComponent = (props) => {
                         {search.currentPage > 0 && (
                             <button
                                 className={`${classes['btn']} ${classes['btn-previous']}`}
-                                id="btn-pagi" onClick={onPreviousHandler}
+                                id="btn-pagi" onClick={props.previous}
                                 data-pagi="previous">
                                 <NavigateBeforeIcon />
                             </button>
@@ -50,7 +43,7 @@ const CommonPaginationComponent = (props) => {
                         {search.currentPage < (props.items.length - 1) && (
                             <button
                                 className={`${classes['btn']} ${classes['btn-next']}`}
-                                id="btn-pagi" onClick={onNextHandler}
+                                id="btn-pagi" onClick={props?.next}
                                 data-pagi="next">
                                 <NavigateNextIcon />
                             </button>
