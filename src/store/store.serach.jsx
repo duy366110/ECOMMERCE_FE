@@ -17,9 +17,6 @@ const searchSlice = createSlice({
             state.elemtItemsPagination = Math.ceil(action.payload.amount / state.itemPage);
         },
         updateTypeSearch: (state, action) => {
-            console.log(action.payload.type);
-            console.log(action.payload.amount);
-
             state.type = action.payload.type;
             if(action.payload.amount) {
                 state.currentPage = 0;
