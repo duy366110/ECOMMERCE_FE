@@ -30,9 +30,19 @@ const searchSlice = createSlice({
         updateCurrentPage: (state, action) => {
             let { page } = action.payload;
             state.currentPage = page;
+        },
+        previousPage: (state) => {
+            if(state.currentPage > 0) {
+                state.currentPage--;
+            }
+        },
+        nextPage: (state) => {
+            if(state.currentPage < (state.elemtItemsPagination - 1)) {
+                state.currentPage++;
+            }
         }
     }
 });
 
-export const { loaderInforSearch, updateTypeSearch, updateCurrentPage } = searchSlice.actions;
+export const { loaderInforSearch, updateTypeSearch, updateCurrentPage, previousPage, nextPage } = searchSlice.actions;
 export default searchSlice.reducer;
