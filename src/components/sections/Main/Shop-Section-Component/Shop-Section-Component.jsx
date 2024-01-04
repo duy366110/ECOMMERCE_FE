@@ -4,48 +4,30 @@ import { useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
 import { mapperElement } from "../../../../store/store.generes";
 import { loaderInforSearch, updateTypeSearch } from "../../../../store/store.serach";
-import { openMessage, closeMessage } from "../../../../store/store.popup";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
 import ShopTabComponent from './Shop-Tab-Component/Shop-Tab-Component';
 import ShopSectionProductComponent from "./Shop-Section-Product-Component/Shop-Section-Product-Component";
 import classes from "./Shop-Section-Component.module.css";
 
 const ShopSectionComponent = (props) => {
+    const shopSectionWorker = new Worker("assets/js/product-worker.js");
     const loader = useLoaderData();
     const dispatch = useDispatch();
 
     const onChangeTypeHandler = (event) => {
         let { type } = event.target.dataset;
 
-        const http = async () => {
-            try {
-                let url = `${config.URI}/api/search/product/amount?category=${type}`;
-                let res = await fetch(url, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+        shopSectionWorker.postMessage({
+            type: "shop-product-amount",
+            url: `${config.URI}/api/search/product/amount?category=${type}`
+        });
 
-                if(!res.ok) {
-                    let infor = await res.json();
-                    throw new Error(infor?.message);
-                }
-
-                let { status, amount } = await res.json();
-                if(status) {
-                    dispatch(updateTypeSearch({type, amount}))
-                }
-
-            } catch (error) {
-                dispatch(openMessage({content: error?.message}));
-                setTimeout(() => {
-                    dispatch(closeMessage());
-                }, 2500)
+        shopSectionWorker.onmessage = (event) => {
+            let { status, amount } = event.data;
+            if(status) {
+                dispatch(updateTypeSearch({type, amount}))
             }
         }
-
-        http();
     }
     
     useEffect(() => {

@@ -4,9 +4,11 @@ import { useSelector, useDispatch }from "react-redux";
 import config from "../../../../../configs/config.env";
 import useValidation from "../../../../../hook/use-validation";
 import { increaseCoupon } from "../../../../../store/store.cart";
+
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+
 import CommonQuantityComponent from '../../../../common/Common-Quantity-Component/Common-Quantity-Component';
 import CommonInputComponent from "../../../../common/Common-Input-Component/Common-Input-Component";
 import CommonButtonComponent from "../../../../common/Common-Button-Component/Common-Button-Component";
@@ -58,7 +60,7 @@ const MainCartContentComponent = (props) => {
         });
     }
     
-    // PHƯƠNG THỨC XOÁ SẢN PHẨM KHỎI DANH MỤC CART CỦA USER.
+    // REMOVE PRODUCT IN CART.
     const removeProductOfCartHandler = (event) => {
         let { id } = event.target.closest('#del-product').dataset;
         workerMethod({

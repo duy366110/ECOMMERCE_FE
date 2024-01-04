@@ -38,10 +38,9 @@ export default MainCartSectionComponent;
 
 // LOADER CART THÔNG TIN USER
 export const loader = () => {
+    let worker = new Worker("assets/js/cart-worker.js");
     return new Promise(async (resolve, reject) => {
         try {
-            let worker = new Worker("assets/js/cart-worker.js");
-
             let user = localStorage.getItem('user');
             if(user) {
                 user = JSON.parse(user);

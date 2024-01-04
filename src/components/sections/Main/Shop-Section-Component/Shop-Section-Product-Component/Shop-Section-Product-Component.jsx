@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../../../../../configs/config.env";
 import { updateCurrentPage, previousPage, nextPage } from "../../../../../store/store.serach";
-import { toggleLoader, openMessage, closeMessage } from "../../../../../store/store.popup";
 import CommonProductCardComponent from "../../../../common/Common-Product-Card-Component/Common-Product-Card-Component";
 import CommonPaginationComponent from "../../../../common/Common-Pagination-Component/Common-Pagination-Component";
 import classes from "./Shop-Section-Product-Component.module.css";
@@ -13,34 +12,19 @@ const ShopSectionProductComponent = (props) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        const http = async () => {
-            try {
-                dispatch(toggleLoader());
-                let url = `${config.URI}/api/search/${search.type}/${search.itemPage}/${search.currentPage * search.itemPage}`;
-                let res = await fetch(url, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
+        const sectionProductWorker = new Worker("assets/js/product-worker.js");
+        sectionProductWorker.postMessage({
+            type: "get-product",
+            url: `${config.URI}/api/search/${search.type}/${search.itemPage}/${search.currentPage * search.itemPage}`,
+        })
 
-                let { status, products } = await res.json();
-                if(status) {
-                    console.log(products);
-                    setProducts(products);
-                }
-
-            } catch (error) {
-                dispatch(openMessage({content: error?.message}));
-                setTimeout(() => {
-                    dispatch(closeMessage());
-                }, 2500)
+        sectionProductWorker.onmessage = (event) => {
+            let { status, products } = event.data;
+            if(status) {
+                setProducts(products);
             }
-            dispatch(toggleLoader());
         }
-
-        http();
-    }, [search, dispatch])
+    }, [search])
 
     const onPaginationHandler = (event) => {
         let { page } = event.target.dataset;
