@@ -15,7 +15,6 @@ const process = async (url = "", token = "",  method = "", payload = null) => {
         return await res.json();
 
     } catch (error) {
-        console.log(error);
         return null;
     }
 }

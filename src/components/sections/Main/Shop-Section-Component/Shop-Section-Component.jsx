@@ -58,64 +58,30 @@ const ShopSectionComponent = (props) => {
 
 export default ShopSectionComponent;
 
-// LOADER CATEGORY
-const loaderCategory = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-
-            let res = await fetch(`${config.URI}/api/client/category`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": ''
-                }
-            })
-
-            if(!res.ok) {
-                throw Error(await res.json());
-            }
-
-            resolve(await res.json());
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
-
-// LOADER PRODUCTS
-const loaderProduct = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-
-            let res = await fetch(`${config.URI}/api/client/product/amount`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": ''
-                }
-            })
-
-            if(!res.ok) {
-                throw Error(await res.json());
-            }
-
-            resolve(await res.json());
-
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
-
-// LOADER THÔNG TIN MAIN SECTION
+// LOADER SHOP INFORMATION SECTION
 export const loader = (request, params) => {
+    const shopSectionLoaderWorker = new Worker("assets/js/product-worker.js");
     return new Promise( async(resolve, reject) => {
         try {
 
-            let data = await Promise.allSettled([loaderProduct(), loaderCategory()]);
-            let [{value:{amount}}, {value:{categories}}] = data;
-            resolve({ status: true , amountAllProduct: amount, categories });
+            let options = {
+                category: {
+                    url: `${config.URI}/api/client/category`
+                },
+                product: {
+                    url: `${config.URI}/api/client/product/amount`
+                }
+            }
+
+            shopSectionLoaderWorker.postMessage({
+                type: "shop-product-loade-infor",
+                options
+            });
+
+            shopSectionLoaderWorker.onmessage = (event) => {
+                let [{value:{categories}}, {value:{amount}}] = event.data;
+                resolve({ status: true , amountAllProduct: amount, categories });
+            }
 
         } catch (error) {
             reject(error);
