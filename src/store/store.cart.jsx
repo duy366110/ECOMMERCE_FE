@@ -13,11 +13,11 @@ function generatorTotalPrice (state, listItem) {
         
         acc += cartItem.total;
 
-        cartItem.total = cartItem.total.toFixed(6).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        cartItem.total = cartItem.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
         state.cart.push(cartItem);
 
         return acc;
-    }, 0).toFixed(6).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 
     localStorage.setItem('cart', JSON.stringify(state));
 }
@@ -97,4 +97,5 @@ const store = createSlice({
 
 
 export const { loadCartInformation, modifiProductInCart, increaseCoupon, cartReload } = store.actions;
+
 export default store.reducer;

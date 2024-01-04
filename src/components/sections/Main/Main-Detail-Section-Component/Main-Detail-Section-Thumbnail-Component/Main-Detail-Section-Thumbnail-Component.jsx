@@ -4,11 +4,6 @@ import classes from "./Main-Detail-Section-Thumbnail-Component.module.css";
 const MainDetailSectionThumbnailComponent = (props) => {
     const [imageMain, setImageMain] = useState('');
 
-    const viewThumbnailHandler = (event) => {
-        let thumbnail = event.target.closest('#thumbnail-list__item').dataset.thumb;
-        setImageMain(thumbnail);
-    }
-
     useEffect(() => {
         setImageMain(props.list[0]);
     }, [props.list])
@@ -16,19 +11,8 @@ const MainDetailSectionThumbnailComponent = (props) => {
     return (
         <div className={classes['thumbnail-component']}>
             <div className={classes['detail-product-thumbnail']}>
-                <div className="row">
-                    <div className="col-2">
-                        <div className={classes['product-thumbnail-list']}>
-                            {props.list.length > 0 && props.list.map((image) => {
-                                return (
-                                    <div key={image} id="thumbnail-list__item" data-thumb={image} onClick={viewThumbnailHandler} className={classes['thumbnail-list__item']}>
-                                        <img src={image} alt="product" />
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                    <div className="col-10">
+                <div className="row d-flex justify-content-center">
+                    <div className="col-9">
                         <div className={classes['product-thumbnail-master']}>
                             <img src={imageMain} alt="product" />
                         </div>

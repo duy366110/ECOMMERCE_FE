@@ -122,7 +122,9 @@ const MainCartContentComponent = (props) => {
                                                 </td>
 
                                                 <td className="text-left">{cartItem.product.name}</td>
-                                                <td>{cartItem.product.price.$numberDecimal.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND</td>
+                                                <td>
+                                                    {cartItem.product.price.$numberDecimal.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND
+                                                </td>
                                                 <td className={classes['td-quantity']}>
                                                     <CommonQuantityComponent id={cartItem.product._id} label="" remove={decreaseQuantityHandler} add={increaseQuantityHandler} quantity={cartItem.quantity} />
                                                 </td>
