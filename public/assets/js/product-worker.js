@@ -24,6 +24,7 @@ onmessage = async (event) => {
 
     switch(type) {
         case "shop-product-amount":
+            postMessage(await process(url));
             break
 
         case "get-product":

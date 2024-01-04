@@ -21,13 +21,16 @@ const process = async (url = "", token = "",  method = "", payload = null) => {
 }
 
 onmessage = async (event) => {
-    console.log(event.data);
-
-//     switch(type) {
-
-//         case "get-product":
-//         default:
-//             // postMessage(await process(url, token));
-//             break;
-//     }
+    let { type, featured } = event.data;
+    
+    switch(type) {
+        case "main-get-infor":
+        default:
+            let data = await Promise.allSettled([
+                process(featured.url),
+            ]);
+        
+            postMessage(data);
+            break
+    }
 }

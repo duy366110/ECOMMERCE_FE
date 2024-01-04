@@ -32,12 +32,10 @@ const ShopSectionComponent = (props) => {
     
     useEffect(() => {
         let { status, amountAllProduct, categories} = loader;
-
         if(status && categories.length > 0) {
             dispatch(loaderInforSearch({amount: amountAllProduct}));
             dispatch(mapperElement({categories}));
         }
-
     }, [loader, dispatch])
 
     return (
