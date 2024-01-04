@@ -29,7 +29,7 @@ const initState = {
         }
     ],
     iphoneAndMac: ["Iphone", 'Ipad', 'Mac'],
-    wireless: ["Airpod", "Watch"],
+    wireless: ["AirPods", "Watch"],
     other: ["Mouse", "Keyborad", "Other"]
 }
 

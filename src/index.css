@@ -63,3 +63,8 @@ code {
 .text-sugget-link {
   text-decoration: unset;
 }
+
+/* PAGINATION */
+.pagi-item-active button {
+  background-color: red;
+}
