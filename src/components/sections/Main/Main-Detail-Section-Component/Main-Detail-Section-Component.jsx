@@ -12,7 +12,6 @@ const MainDeatilSectionComponent = (props) => {
     const loader = useLoaderData();
 
     const [product, setProduct] = useState(null);
-    const [description, setDescription] = useState('');
     const [productSample, setProductSample] = useState([]);
 
     // PHƯƠNG THỰC HIÊN MAP PRODUCT VÀ CATEGORY DATA.
@@ -23,18 +22,9 @@ const MainDeatilSectionComponent = (props) => {
         if(status) {
             setProduct(product);
 
-            // FORMAT NỘI DUNG MIÊU TẢ
-            let des = product.longDes.split('(+)').map((content, index) => {
-                if(index === 0 ) {
-                    return `<h2 class="descrition-title">${content}<h2>`;
-                }
-                return `<p class="descrition-item">${content}<p>`;
-
-            }).join('');
-            setDescription(des);
-
             // LỌC NHỮNG SẢN PHẨM TƯỢNG TỰ SẢN PHẨM CHÍNH
-            category.collections = category.collections.filter((pro) => pro._id !== product._id)
+            category.collections = category.collections
+                                    .filter((pro) => pro._id !== product._id)
                                     .map((pro) => {
                                         pro.category = product.category;
                                         return pro;
@@ -57,11 +47,11 @@ const MainDeatilSectionComponent = (props) => {
 
                         {product && (
                             <div className="row">
-                                <div className="col-12 col-lg-6 mb-5 mb-lg-0">
+                                <div className="col-12 col-lg-5 mb-5 mb-lg-0">
                                     <MainDetailSectionThumbnailComponent list={product.images} />
                                 </div>
 
-                                <div className="col-12 col-lg-6">
+                                <div className="col-12 col-lg-7">
                                     <MainDetailSectionInformationComponent information={product} />
                                 </div>
 
@@ -69,7 +59,6 @@ const MainDeatilSectionComponent = (props) => {
                                     <div className={classes['product-detail-information']}>
                                         <h3 className={classes['product-detail-information__sub-title']}>Description</h3>
                                         <h3 className={classes['product-detail-information__title']}>Product Description</h3>
-                                        <div contentEditable='true' dangerouslySetInnerHTML={{__html: description}}/>
                                     </div>
                                 </div>
                             </div>

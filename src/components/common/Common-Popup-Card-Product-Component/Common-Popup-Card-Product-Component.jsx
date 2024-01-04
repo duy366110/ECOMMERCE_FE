@@ -9,6 +9,8 @@ import classes from "./Common-Popup-Card-Product-Component.module.css";
 const CommonPopupCardProductComponent = (props) => {
     const navigate = useNavigate();
 
+    console.log(props.infor);
+
     const viewDetailHandler = (event) => {
         const { id } = event.target.closest('#btn-common').dataset;
         const { category } = props.infor;
@@ -27,7 +29,11 @@ const CommonPopupCardProductComponent = (props) => {
                 <div className="row h-100 w-100">
                     <div className="col-12 col-md-5">
                         <div className={classes['card-product-thumbnail']}>
-                            <img src={props.infor.images[0]} alt="product thumbnail" />
+                            <img
+                                className={`
+                                    ${props.infor.category.title === 'Mac'? classes['mac-thumbnail'] : ''}
+                                `}
+                                src={props.infor.images[0]} alt="product thumbnail" />
                         </div>
                     </div>
                     <div className="col-12 col-md-7">

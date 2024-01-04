@@ -7,15 +7,15 @@
     height: 100%;
 }
 
-.thumbnail-list__item {
+/* .thumbnail-list__item {
     height: calc((100% / 4) - 10px);
     width: 100%;
 }
 
 .thumbnail-list__item img {
     height: 100%;
-    width: 100%;
-}
+    width: 100%; */
+/* } */
 
 .product-thumbnail-master {
     height: 100%;

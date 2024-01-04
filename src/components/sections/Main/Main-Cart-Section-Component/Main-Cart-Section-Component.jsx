@@ -17,7 +17,7 @@ const MainCartSectionComponent = (props) => {
     // PHƯƠNG THỨC LOAD THÔNG CART CỦA USER
     useEffect(() => {
         if(auth.token) {
-            let { user} = loader;
+            let { user } = loader;
             dispatch(loadCartInformation({user}));
 
         } else {
@@ -40,24 +40,20 @@ export default MainCartSectionComponent;
 export const loader = () => {
     return new Promise(async (resolve, reject) => {
         try {
+            let worker = new Worker("assets/js/cart-worker.js");
 
             let user = localStorage.getItem('user');
-                if(user) {
-                    user = JSON.parse(user);
+            if(user) {
+                user = JSON.parse(user);
+                worker.postMessage({
+                    type: "get-cart",
+                    url: `${config.URI}/api/client/cart`,
+                    token: `Bearer ${user.token}`
+                });
 
-                    let res = await fetch(`${config.URI}/api/client/cart`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${user.token}`
-                    }
-                })
-
-                if(!res.ok) {
-                    throw Error(await res.json());
+                worker.onmessage = (event) => {
+                    resolve(event.data);
                 }
-
-                resolve(await res.json());
 
             } else {
                 resolve(null);

@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 545px;
+    height: 480px;
     overflow: hidden;
     padding: 4.5rem;
     position: relative;
@@ -49,8 +49,12 @@
 }
 
 .card-product-thumbnail img {
-    height: 100%;
-    width: 100%;
+    height: 325px;
+    width: 255px;
+}
+
+.mac-thumbnail {
+    height: 270px!important;
 }
 
 .card-product-infor {
@@ -84,7 +88,7 @@
 @media screen and (max-width: 768px) {
     .card-product-wrapper {
         overflow: auto;
-        padding: 1rem;
+        padding: 2rem;
         width:90%;
     }
 
