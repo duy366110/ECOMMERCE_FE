@@ -32,7 +32,13 @@
 }
 
 .card-thumbnail-wrapper img {
-    width: 100%;
+    height: 180px;
+    width: 150px;
+}
+
+.mac-thumbnail {
+    height: 145px!important;
+    width: 205px!important;
 }
 
 .card-title {

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
     type: "all",
-    itemPage: 5,
+    itemPage: 9,
     elemtItemsPagination: 0,
     currentPage: 0,
     amountProductOfType: 0

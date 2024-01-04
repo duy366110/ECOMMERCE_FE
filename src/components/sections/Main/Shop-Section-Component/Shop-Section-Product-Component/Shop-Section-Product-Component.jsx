@@ -26,6 +26,7 @@ const ShopSectionProductComponent = (props) => {
 
                 let { status, products } = await res.json();
                 if(status) {
+                    console.log(products);
                     setProducts(products);
                 }
 
@@ -43,6 +44,15 @@ const ShopSectionProductComponent = (props) => {
 
     const onPaginationHandler = (event) => {
         let { page } = event.target.dataset;
+        // let ul = event.target.parentElement.parentElement;
+        // ul.childNodes.forEach((li, index) => {
+        //     li.classList.remove("pagi-item-active");
+        //     if(index === search.currentPage) {
+        //         li.classList.add("pagi-item-active")
+        //     }
+
+        //     console.log(li);
+        // })
         dispatch(updateCurrentPage({page}));
     }
 
