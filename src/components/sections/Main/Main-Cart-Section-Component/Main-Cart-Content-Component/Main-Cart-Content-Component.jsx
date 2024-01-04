@@ -47,19 +47,16 @@ const MainCartContentComponent = (props) => {
     const increaseQuantityHandler = (event) => {
         let { id } = event.target.closest('#add-product').dataset;
 
-        if(auth.token && id) {
-            httpMethod({
-                url: `${config.URI}/api/client/cart/increase`,
-                method: 'PATCH',
-                author: auth.token,
-                payload: JSON.stringify({product: id})
-            }, (information) => {
-    
-                let { status} = information;
-                if(status) {
-                    dispatch(modifiProductInCart({product: id, type: 'increase'}));
-                }
-            })
+        let worker = new Worker("assets/js/cart-worker.js");
+        worker.postMessage({
+            type: "increment-product-cart",
+            url: `${config.URI}/api/client/cart/increase`,
+            token: `Bearer ${auth.token}`,
+            payload: {product: id}
+        })
+
+        worker.onmessage = (value) => {
+            window.location.reload();
         }
     }
     
