@@ -35,18 +35,20 @@ export default MainSectionComponent;
 
 // LOAD INFORMATION
 export const loader = (request, params) => {
-    let mainSectionWorker = new Worker(`${window.location.origin}/assets/js/main-worker.js`);
+    let mainSectionWorker = new Worker(`${window.location.origin}/assets/js/worker.js`);
 
     return new Promise( async(resolve, reject) => {
         try {
             let options = {
-                type: "main-get-infor",
                 featured: {
                     url: `${config.URI}/api/client/featured`
                 }
             }
 
-            mainSectionWorker.postMessage(options);
+            mainSectionWorker.postMessage({
+                type: "main-get-infor",
+                options
+            });
             mainSectionWorker.onmessage = (event) => {
                 let [{value: {featureds}}] = event.data;
                 resolve({ status: true , featureds });

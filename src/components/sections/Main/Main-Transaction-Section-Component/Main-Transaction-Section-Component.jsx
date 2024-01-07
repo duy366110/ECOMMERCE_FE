@@ -93,7 +93,7 @@ const MainTransactionSectionComponent = (props) => {
 export default  MainTransactionSectionComponent;
 
 export const loader = () => {
-    const worker = new Worker(`${window.location.origin}/assets/js/transaction-worker.js`);
+    const worker = new Worker(`${window.location.origin}/assets/js/worker.js`);
     return new Promise( async(resolve, reject) => {
         try {
             let user = localStorage.getItem("user");

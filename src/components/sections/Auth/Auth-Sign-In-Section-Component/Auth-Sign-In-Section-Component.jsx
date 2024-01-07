@@ -1,10 +1,14 @@
 import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
+
 import config from "../../../../configs/config.env";
-import useHttp from '../../../../hook/use-http';
 import useValidation from "../../../../hook/use-validation";
+import useWorker from "../../../../hook/use-worker";
 import { authSignin } from "../../../../store/store.auth";
+
+import CottageIcon from '@mui/icons-material/Cottage';
+
 import CommonInputComponent from '../../../common/Common-Input-Component/Common-Input-Component';
 import classes from "./Auth-Sign-In-Section-Component.module.css";
 
@@ -15,11 +19,10 @@ const AuthSignInSectionComponent = (props) => {
     const emailRef = useRef();
     const passwordRef = useRef();
 
-    let { httpMethod } = useHttp();
+    const { working } = useWorker();
     const {value: emailValue, valid: validEmail, onBlur: blurEmail, onChange: changeEmail} = useValidation(['require', 'email']);
     const {value: passwordValue, valid: passwordValid, onBlur: passwordBlur, onChange: passwordChange} = useValidation(['require', 'password']);
 
-    // NGƯỜI DÙNG THỰC HIỆN ĐĂNG NHẬP
     const SignInHandler = (event) => {
         event.preventDefault();
 
@@ -31,10 +34,11 @@ const AuthSignInSectionComponent = (props) => {
 
         if(validEmail.status && passwordValid.status) {
 
-            httpMethod({
+            working({
+                type: "auth-sign-in",
                 url: `${config.URI}/api/auth/signin`,
-                method: 'POST',
-                author: '',
+                token: "",
+                method: "POST",
                 payload: JSON.stringify({email: emailValue, password: passwordValue})
             }, (information) => {
                 let { status, infor} = information;
@@ -51,8 +55,11 @@ const AuthSignInSectionComponent = (props) => {
     }
 
     return (
-        <div className="auth-sign-in-component">
-            <h2 className={classes['form-title']}>Sign in</h2>
+        <div className={classes["auth-sign-in-component"]}>
+            <h2 className="form-title">
+                <Link to="/"><CottageIcon /></Link>
+                <span>Sign in</span>
+            </h2>
             <form onSubmit={SignInHandler} className={classes['auth-sign-in-form']}>
                 <CommonInputComponent
                     ref={emailRef}
