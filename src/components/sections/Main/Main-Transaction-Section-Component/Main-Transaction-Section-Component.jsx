@@ -6,10 +6,8 @@ import classes from "./Main-Transaction-Section-Component.module.css";
 
 const MainTransactionSectionComponent = (props) => {
     const loader = useLoaderData();
-
     const [transactions, setTransactions] = useState([]);
 
-    // PHƯƠNG THỨC THỰC HIỆN LOAD VÀ MAPPẺ DATA
     useEffect(() => {
         let { status, transactions } = loader;
         if(status) {
@@ -75,7 +73,7 @@ const MainTransactionSectionComponent = (props) => {
                                         <td colSpan={3}>{transaction.order.reduce((acc, orderItem) => {
                                             acc += Number(orderItem.product.price.$numberDecimal) * Number(orderItem.quantity);
                                             return acc;
-                                        }, 0).toFixed(6).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND
+                                        }, 0).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')} VND
                                         </td>
                                     </tr>
                                 </tbody>
@@ -94,32 +92,26 @@ const MainTransactionSectionComponent = (props) => {
 
 export default  MainTransactionSectionComponent;
 
-// LOADER THÔNG TIN TRẤNCTION CỦA USER
- export const loader = () => {
+export const loader = () => {
+    const transactionWorker = new Worker("assets/js/transaction-worker.js");
     return new Promise( async(resolve, reject) => {
         try {
             let user = localStorage.getItem("user");
 
             if(user) {
                 user = JSON.parse(user);
+                transactionWorker.postMessage({
+                    type: "get-transaction",
+                    url: `${config.URI}/api/client/transaction`,
+                    token: `Bearer ${user.token}`
+                });
+                transactionWorker.onmessage = (event) => {
+                    let {status, message} = event.data;
 
-                let res = await fetch(`${config.URI}/api/client/transaction`, {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": 'application/json',
-                        "Authorization": user? `Bearer ${user.token}` : ''
-                    }
-                })
-
-                if(!res.ok) {
-                    let infor = await res.json();
-                    throw Error(infor.message);
+                    if(!status) throw Error(message);
+                    resolve(event.data);
                 }
-
-                resolve(await res.json());
-
             }
-
         } catch (error) {
             reject({status: false, error});
         }
