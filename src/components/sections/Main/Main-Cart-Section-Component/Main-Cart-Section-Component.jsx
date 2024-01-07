@@ -36,23 +36,24 @@ export default MainCartSectionComponent;
 
 // LOADER CART OF USER.
 export const loader = () => {
+    const worker = new Worker(`${window.location.origin}/assets/js/worker.js`);
     return new Promise(async (resolve, reject) => {
         try {
             let user = localStorage.getItem('user');
-                if(user) {
-                    user = JSON.parse(user);
-                    let res = await fetch(`${config.URI}/api/client/cart`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${user.token}`
-                    }
-                })
+            if(user) {
+                user = JSON.parse(user);
+                worker.postMessage({
+                    type: "get-user-cart",
+                    url: `${config.URI}/api/client/cart`,
+                    token: `Bearer ${user.token}`
+                });
 
-                if(!res.ok) {
-                    throw Error(await res.json());
+                worker.onmessage = (event) => {
+                    let {status, message} = event.data;
+
+                    if(!status) throw Error(message);
+                    resolve(event.data);
                 }
-                resolve(await res.json());
 
             } else {
                 resolve(null);

@@ -26,6 +26,13 @@ onmessage = async (event) => {
     let {type, url, token, method, payload} = event.data;
 
     switch(type) {
+        case "get-user-cart":
+            postMessage(await process(url, token));
+            break
+
+        case "increment-product-cart":
+        case "decrement-product-cart":
+        case "remove-product-in-cart":
         case "user-order":
         default:
             postMessage(await process(url, token, method, payload));

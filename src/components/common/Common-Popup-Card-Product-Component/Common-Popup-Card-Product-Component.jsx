@@ -9,8 +9,6 @@ import classes from "./Common-Popup-Card-Product-Component.module.css";
 const CommonPopupCardProductComponent = (props) => {
     const navigate = useNavigate();
 
-    console.log(props.infor);
-
     const viewDetailHandler = (event) => {
         const { id } = event.target.closest('#btn-common').dataset;
         const { category } = props.infor;

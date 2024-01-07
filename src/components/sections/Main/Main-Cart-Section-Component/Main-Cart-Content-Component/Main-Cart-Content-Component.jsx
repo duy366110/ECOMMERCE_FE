@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch }from "react-redux";
+
 import config from "../../../../../configs/config.env";
 import useValidation from "../../../../../hook/use-validation";
+import useWorker from "../../../../../hook/use-worker";
 import { increaseCoupon } from "../../../../../store/store.cart";
 
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -15,59 +17,67 @@ import CommonButtonComponent from "../../../../common/Common-Button-Component/Co
 import classes from './Main-Cart-Content-Component.module.css';
 
 const MainCartContentComponent = (props) => {
-    const worker = new Worker("assets/js/cart-worker.js");
     const dispatch = useDispatch();
     const cartInfor = useSelector((state) => state.cart);
     const auth = useSelector((state) => state.auth);
 
     const couponRef = useRef();
+
+    const { working } = useWorker();
     const {resetValue: couponResetValue, value: couponValue, valid: couponValid, onBlur: couponBlur, onChange: couponChange} = useValidation([]);
-
-    const workerMethod = (infor = {
-        type: "",
-        url: "",
-        payload: null
-    }) => {
-        worker.postMessage({
-            type: infor.type,
-            url: infor.url,
-            token: `Bearer ${auth.token}`,
-            payload: infor.payload
-        })
-
-        worker.onmessage = (value) => {
-            window.location.reload();
-        }
-    }
 
      // DECREMENT PRODUCT IN CART.
     const decreaseQuantityHandler = (event) => {
         let { id } = event.target.closest('#remove-product').dataset;
-        workerMethod({
+
+        working({
             type: "decrement-product-cart",
             url: `${config.URI}/api/client/cart/decrease`,
-            payload: {product: id}
-        });
+            token: `Bearer ${auth.token}`,
+            method: "PATCH",
+            payload: JSON.stringify({product: id})
+        }, (information) => {
+            let { status} = information;
+            if(status) {
+                window.location.reload();
+            }
+        })
     }
 
     // INCREMENT PRODUCT IN CART.
     const increaseQuantityHandler = (event) => {
         let { id } = event.target.closest('#add-product').dataset;
-        workerMethod({
+
+        working({
             type: "increment-product-cart",
             url: `${config.URI}/api/client/cart/increase`,
-            payload: {product: id}
-        });
+            token: `Bearer ${auth.token}`,
+            method: "PATCH",
+            payload: JSON.stringify({product: id})
+        }, (information) => {
+            let { status} = information;
+            if(status) {
+                window.location.reload();
+            }
+        })
     }
     
     // REMOVE PRODUCT IN CART.
     const removeProductOfCartHandler = (event) => {
         let { id } = event.target.closest('#del-product').dataset;
-        workerMethod({
+
+        working({
             type: "remove-product-in-cart",
             url: `${config.URI}/api/client/cart/product`,
-            payload: {product: id}
-        });
+            token: `Bearer ${auth.token}`,
+            method: "DELETE",
+            payload: JSON.stringify({product: id})
+        }, (information) => {
+            let { status} = information;
+            if(status) {
+                window.location.reload();
+            }
+        })
     }
 
     // PHƯƠNG THỨC THÊM COUPON

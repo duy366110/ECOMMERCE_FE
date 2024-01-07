@@ -2,7 +2,7 @@ import { useDispatch  } from "react-redux";
 import { toggleLoader } from "../store/store.popup";
 
 const useWorker = () => {
-    const worker = new Worker("assets/js/worker.js");
+    const worker = new Worker(`${window.location.origin}/assets/js/worker.js`);
     const dispatch = useDispatch();
     
     const working = (infor = {

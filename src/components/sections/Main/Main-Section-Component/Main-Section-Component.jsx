@@ -35,7 +35,7 @@ export default MainSectionComponent;
 
 // LOAD INFORMATION
 export const loader = (request, params) => {
-    let mainSectionWorker = new Worker("assets/js/main-worker.js");
+    let mainSectionWorker = new Worker(`${window.location.origin}/assets/js/main-worker.js`);
 
     return new Promise( async(resolve, reject) => {
         try {

@@ -93,19 +93,20 @@ const MainTransactionSectionComponent = (props) => {
 export default  MainTransactionSectionComponent;
 
 export const loader = () => {
-    const transactionWorker = new Worker("assets/js/transaction-worker.js");
+    const worker = new Worker(`${window.location.origin}/assets/js/transaction-worker.js`);
     return new Promise( async(resolve, reject) => {
         try {
             let user = localStorage.getItem("user");
 
             if(user) {
                 user = JSON.parse(user);
-                transactionWorker.postMessage({
+                worker.postMessage({
                     type: "get-transaction",
                     url: `${config.URI}/api/client/transaction`,
                     token: `Bearer ${user.token}`
                 });
-                transactionWorker.onmessage = (event) => {
+                
+                worker.onmessage = (event) => {
                     let {status, message} = event.data;
 
                     if(!status) throw Error(message);
