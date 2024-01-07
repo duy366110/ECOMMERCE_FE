@@ -14,19 +14,16 @@ const MainDetailSectionInformationComponent = (props) => {
     const { httpMethod } = useHttp();
     const [quantity, setQuantity] = useState(0);
 
-    // GIẢM QUANTITY SẢN PHẨM
     const removeQuantity = (event) => {
         if(quantity > 0) {
             setQuantity((pre) => pre - 1);
         }
     }
 
-    // TĂNG QUANTITY SẢN PHẨM
     const addQuantity = (event) => {
         setQuantity((pre) => pre + 1);
     }
 
-    // THÊM SẢN PHẨM VÀO CART USER
     const addCartHandler = (event) => {
         if(auth.token && auth.email) {
             if(quantity) {

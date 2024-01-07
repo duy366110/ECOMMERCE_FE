@@ -2,7 +2,7 @@ import { useEffect, useState,  useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import config from "../../../../configs/config.env";
-import useHttp from "../../../../hook/use-http";
+import useWorker from "../../../../hook/use-worker";
 import useValidation from "../../../../hook/use-validation";
 import CommonBreadcroumbComponent from "../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component";
 import CommonInputComponent from "../../../common/Common-Input-Component/Common-Input-Component";
@@ -20,7 +20,7 @@ const MainCheckoutSectionComponent = (props) => {
     const phoneRef = useRef();
     const addressRef = useRef();
 
-    const { httpMethod } = useHttp();
+    const { working } = useWorker();
     const {defaultValue: nameDef, value: nameValue, valid: validName, onBlur: blurName, onChange: changeName} = useValidation(['require']);
     const {defaultValue: emailDef, value: emailValue, valid: validEmail, onBlur: blurEmail, onChange: changeEmail} = useValidation(['require', 'email']);
     const {defaultValue: phoneDef, value: phoneValue, valid: validPhone, onBlur: blurPhone, onChange: changePhone} = useValidation(['require', 'phone']);
@@ -28,7 +28,6 @@ const MainCheckoutSectionComponent = (props) => {
 
     const [CartProducts, setCartProducts] = useState([]);
 
-    // PHƯƠNG THỨC LOAD THÔNG TIN KHÁCH HÀNG VÀ SẢN PHẨM TRƯỚC KHI ORDER
     useEffect(() => {
         if(cartInfor.cart.length) {
             setCartProducts(cartInfor.cart);
@@ -53,7 +52,6 @@ const MainCheckoutSectionComponent = (props) => {
         phoneDef
     ])
 
-    // PHƯƠNG THỨC THỰC HIỆN ORDER SẢN PHẨM
     const orderHandler = (event) => {
         event.preventDefault();
 
@@ -80,13 +78,13 @@ const MainCheckoutSectionComponent = (props) => {
                 coupon
             }
 
-            httpMethod({
+            working({
+                type: "user-order",
                 url: `${config.URI}/api/client/order`,
-                method: 'POST',
-                author: auth.token,
+                token: `Bearer ${auth.token}`,
+                method: "POST",
                 payload: JSON.stringify(order)
             }, (information) => {
-    
                 let { status} = information;
                 if(status) {
                     navigate('/transaction');
