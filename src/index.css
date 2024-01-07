@@ -1,6 +1,7 @@
 :root {
   --bg-color-first: #f6f9f6;
   --bg-color-gradient: #3939390a;
+  --color-first: #e5c38c;
   --color-text-first: #313131;
   --color-text-two: #8d8d8d;
   --color-text-three: #212529;
@@ -53,15 +54,41 @@ code {
   text-transform: capitalize;
 }
 
-/* FORM SUGGET */
+/* FORM */
+.form-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  position: relative;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.form-title a {
+  color: var(--color-first);
+  left: 0px;
+  position: absolute;
+}
+
+.form-title a svg {
+  font-size: 2.5rem;
+}
+
 .text-sugget {
   color: var(--color-text-two);
   font-size: 1.5rem;
   letter-spacing: .3px;
+  margin-bottom: 0px;
 }
 
 .text-sugget-link {
+  color: var(--color-first);
   text-decoration: unset;
+}
+
+.text-sugget-link:hover {
+  color: var(--color-first);
+  text-decoration: underline;
 }
 
 /* PAGINATION */

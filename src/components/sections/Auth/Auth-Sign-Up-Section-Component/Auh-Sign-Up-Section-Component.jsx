@@ -1,10 +1,14 @@
 import { useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
+
 import config from "../../../../configs/config.env";
 import useValidation from "../../../../hook/use-validation";
-import useHttp from "../../../../hook/use-http";
+import useWorker from "../../../../hook/use-worker";
 import { authSignin} from "../../../../store/store.auth";
+
+import CottageIcon from '@mui/icons-material/Cottage';
+
 import CommonInputComponent from "../../../common/Common-Input-Component/Common-Input-Component";
 import classes from "./Auth-Sign-Up-Section-Component.module.css";
 
@@ -18,14 +22,13 @@ const SignUpSectionComponent = (props) => {
     const phoneRef = useRef();
     const  addressRef = useRef();
 
-    let { httpMethod } = useHttp();
+    const { working } = useWorker();
     const {value: fullNameValue, valid: fullNameValid, onBlur: fullNameBlur, onChange: fullNameChange} = useValidation(['require']);
     const {value: emailValue, valid: emailValid, onBlur: emailBlur, onChange: emailChange} = useValidation(['require', 'email']);
     const {value: passwordValue, valid: passwordValid, onBlur: passwordBlur, onChange: passwordChange} = useValidation(['require', 'password']);
     const {value: phoneValue, valid: phoneValid, onBlur: phoneBlur, onChange: phoneChange} = useValidation(['require', 'phone']);
     const {value: addressValue, valid: addressValid, onBlur: addressBlur, onChange: addressChange} = useValidation(['require']);
 
-    // PHƯƠNG THỨC KHÁCH HÀNG THỰC HIỆN ĐĂNG KÝ TÀI KHOẢN
     const signUpHandler = (event) => {
         event.preventDefault();
 
@@ -59,10 +62,11 @@ const SignUpSectionComponent = (props) => {
                 address: addressValue
             }
 
-            httpMethod({
+            working({
+                type: "auth-sign-up",
                 url: `${config.URI}/api/client/user/account`,
-                method: 'POST',
-                author: '',
+                token: "",
+                method: "POST",
                 payload: JSON.stringify(account)
             }, (information) => {
                 let { status, infor} = information;
@@ -79,8 +83,11 @@ const SignUpSectionComponent = (props) => {
     }
 
     return (
-        <div className="auth-sign-up-component">
-            <h2 className={classes['form-title']}>Sign up</h2>
+        <div className={classes["auth-sign-up-component"]}>
+            <h2 className="form-title">
+                <Link to="/"><CottageIcon /></Link>
+                <span>Sign up</span>
+            </h2>
             <form onSubmit={signUpHandler} className={classes['auth-sign-up-form']}>
                 <CommonInputComponent
                     ref={fullNameRef}
