@@ -14,15 +14,13 @@ const MainDeatilSectionComponent = (props) => {
     const [product, setProduct] = useState(null);
     const [productSample, setProductSample] = useState([]);
 
-    // PHƯƠNG THỰC HIÊN MAP PRODUCT VÀ CATEGORY DATA.
     const mapperData = useCallback(function() {
 
         let { status, product, category} = loader;
-
         if(status) {
             setProduct(product);
 
-            // LỌC NHỮNG SẢN PHẨM TƯỢNG TỰ SẢN PHẨM CHÍNH
+            // FILTER CATEGORY PRODUCT SAMPLE PRODUCT MAIN
             category.collections = category.collections
                                     .filter((pro) => pro._id !== product._id)
                                     .map((pro) => {
@@ -86,65 +84,26 @@ const MainDeatilSectionComponent = (props) => {
 
 export default MainDeatilSectionComponent;
 
-// LOADER SẢN PHẨM TƯƠNG TỰ
-async function loadProductsSample (category) {
-    return new Promise( async(resolve, reject) => {
-        try {
-            let res = await fetch(`${config.URI}/api/client/category/${category}`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": 'application/json',
-                    "Authorization": ''
-                }
-            })
-
-            if(!res.ok) {
-                let infor = await res.json();
-                throw Error(infor.message);
-            }
-
-            resolve(await res.json());
-
-        } catch (error) {
-            reject({status: false, error});
-        }
-    })
-}
-
-// LOADER PRODUCT CHI TIẾT
-async function loadProduct (product) {
-    return new Promise( async(resolve, reject) => {
-        try {
-            let res = await fetch(`${config.URI}/api/client/product/${product}`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": 'application/json',
-                    "Authorization": ''
-                }
-            })
-
-            if(!res.ok) {
-                let infor = await res.json();
-                throw Error(infor.message);
-            }
-
-            resolve(await res.json());
-
-        } catch (error) {
-            reject({status: false, error});
-        }
-    })
-}
-
-// THỰC HIỆN LOADER THÔNG TRANG CHI TIẾT SẢN PHẨM
+// LOADER PRODUCT DETAIL INFORMATION
 export const loader = (request, params) => {
+    const worker = new Worker(`${window.location.origin}/assets/js/worker.js`);
+
     return new Promise( async(resolve, reject) => {
         try {
             let { product_id, category_id } = params;
-
-            let data = await Promise.all([loadProduct(product_id), loadProductsSample(category_id)]);
-            let [{product}, {category}] = data;
-            resolve({status: true , product, category});
+            const options = {
+                product: {
+                    url: `${config.URI}/api/client/product/${product_id}`
+                },
+                category: {
+                    url: `${config.URI}/api/client/category/${category_id}`
+                }
+            }
+            worker.postMessage({type: "get-product-detail", options});
+            worker.onmessage = (event) => {
+                let [{value: {category}}, {value: {product}}] = event.data;
+                resolve({status: true , product, category});
+            }
 
         } catch (error) {
             reject({status: false, error});

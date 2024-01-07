@@ -23,13 +23,28 @@ const process = async (url = "", token = "",  method = "", payload = null) => {
 }
 
 onmessage = async (event) => {
-    let {type, url, token, method, payload} = event.data;
+    let {type, url, token, method, payload, options} = event.data;
 
     switch(type) {
+        case "shop-product-amount":
+        case "shop-get-product":
+            postMessage(await process(url));
+            break
+
         case "get-user-cart":
             postMessage(await process(url, token));
             break
 
+        case "shop-product-loade-infor":
+        case "get-product-detail":
+            let data = await Promise.allSettled([
+                process(options.category.url),
+                process(options.product.url),
+            ]);
+            postMessage(data);
+            break;
+
+        case "user-add-product-cart":
         case "increment-product-cart":
         case "decrement-product-cart":
         case "remove-product-in-cart":

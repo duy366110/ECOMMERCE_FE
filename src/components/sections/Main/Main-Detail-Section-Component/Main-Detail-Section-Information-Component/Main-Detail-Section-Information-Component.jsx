@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import config from "../../../../../configs/config.env";
-import useHttp from "../../../../../hook/use-http";
+import useWorker from "../../../../../hook/use-worker";
 import CommonButtonComponent from "../../../../common/Common-Button-Component/Common-Button-Component";
 import CommonQuantityComponent from "../../../../common/Common-Quantity-Component/Common-Quantity-Component";
 import classes from "./Main-Detail-Section-Information-Component.module.css";
@@ -11,7 +11,7 @@ const MainDetailSectionInformationComponent = (props) => {
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth);
 
-    const { httpMethod } = useHttp();
+    const { working } = useWorker();
     const [quantity, setQuantity] = useState(0);
 
     const removeQuantity = (event) => {
@@ -27,13 +27,13 @@ const MainDetailSectionInformationComponent = (props) => {
     const addCartHandler = (event) => {
         if(auth.token && auth.email) {
             if(quantity) {
-                httpMethod({
+                working({
+                    type: "user-add-product-cart",
                     url: `${config.URI}/api/client/cart`,
-                    method: 'POST',
-                    author: auth.token,
+                    token: `Bearer ${auth.token}`,
+                    method: "POST",
                     payload: JSON.stringify({product: props.information._id, quantity})
                 }, (information) => {
-
                     let { status} = information;
                     if(status) {
                         navigate("/cart");

@@ -12,9 +12,9 @@ const ShopSectionProductComponent = (props) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        const sectionProductWorker = new Worker("assets/js/product-worker.js");
+        const sectionProductWorker = new Worker("assets/js/worker.js");
         sectionProductWorker.postMessage({
-            type: "get-product",
+            type: "shop-get-product",
             url: `${config.URI}/api/search/${search.type}/${search.itemPage}/${search.currentPage * search.itemPage}`,
         })
 
@@ -24,6 +24,7 @@ const ShopSectionProductComponent = (props) => {
                 setProducts(products);
             }
         }
+
     }, [search])
 
     const onPaginationHandler = (event) => {
