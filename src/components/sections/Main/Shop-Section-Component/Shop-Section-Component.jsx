@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLoaderData } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import config from "../../../../configs/config.env";
+import useWorker from "../../../../hook/use-worker";
 import { mapperElement } from "../../../../store/store.generes";
 import { loaderInforSearch, updateTypeSearch } from "../../../../store/store.serach";
 import BreadcroumbComponent from '../../../common/Common-Breadcrumb-Component/Common-Breadcrumb-Component';
@@ -10,24 +11,24 @@ import ShopSectionProductComponent from "./Shop-Section-Product-Component/Shop-S
 import classes from "./Shop-Section-Component.module.css";
 
 const ShopSectionComponent = (props) => {
-    const shopSectionWorker = new Worker("assets/js/product-worker.js");
+    // const shopSectionWorker = new Worker("assets/js/product-worker.js");
     const loader = useLoaderData();
     const dispatch = useDispatch();
+
+    const { working } = useWorker();
 
     const onChangeTypeHandler = (event) => {
         let { type } = event.target.dataset;
 
-        shopSectionWorker.postMessage({
+        working({
             type: "shop-product-amount",
-            url: `${config.URI}/api/search/product/amount?category=${type}`
-        });
-
-        shopSectionWorker.onmessage = (event) => {
-            let { status, amount } = event.data;
+            url: `${config.URI}/api/search/product/amount?category=${type}`,
+        }, (information) => {
+            let { status, amount } = information;
             if(status) {
                 dispatch(updateTypeSearch({type, amount}))
             }
-        }
+        })
     }
     
     useEffect(() => {
@@ -60,7 +61,7 @@ export default ShopSectionComponent;
 
 // LOADER SHOP INFORMATION SECTION
 export const loader = (request, params) => {
-    const worker = new Worker(`${window.location.origin}/assets/js/product-worker.js`);
+    const worker = new Worker(`${window.location.origin}/assets/js/worker.js`);
     return new Promise( async(resolve, reject) => {
         try {
 
