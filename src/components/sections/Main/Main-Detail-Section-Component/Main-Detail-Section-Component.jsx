@@ -12,6 +12,7 @@ const MainDeatilSectionComponent = (props) => {
     const loader = useLoaderData();
 
     const [product, setProduct] = useState(null);
+    const [productDesc, setProductDesc] = useState("");
     const [productSample, setProductSample] = useState([]);
 
     const mapperData = useCallback(function() {
@@ -19,6 +20,16 @@ const MainDeatilSectionComponent = (props) => {
         let { status, product, category} = loader;
         if(status) {
             setProduct(product);
+
+            let des = product.longDes.split('(+)')
+                .filter((content) => content)
+                .map((content) => {
+                    return `<p class="descrition-item">${content}</p>`;
+                })
+                .join('');
+
+            console.log(des);
+            setProductDesc(des);
 
             // FILTER CATEGORY PRODUCT SAMPLE PRODUCT MAIN
             category.collections = category.collections
@@ -57,6 +68,8 @@ const MainDeatilSectionComponent = (props) => {
                                     <div className={classes['product-detail-information']}>
                                         <h3 className={classes['product-detail-information__sub-title']}>Description</h3>
                                         <h3 className={classes['product-detail-information__title']}>Product Description</h3>
+                                        <div
+                                            dangerouslySetInnerHTML={{__html: productDesc}}/>
                                     </div>
                                 </div>
                             </div>
