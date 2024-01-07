@@ -60,7 +60,7 @@ export default ShopSectionComponent;
 
 // LOADER SHOP INFORMATION SECTION
 export const loader = (request, params) => {
-    const shopSectionLoaderWorker = new Worker("assets/js/product-worker.js");
+    const worker = new Worker(`${window.location.origin}/assets/js/product-worker.js`);
     return new Promise( async(resolve, reject) => {
         try {
 
@@ -73,12 +73,12 @@ export const loader = (request, params) => {
                 }
             }
 
-            shopSectionLoaderWorker.postMessage({
+            worker.postMessage({
                 type: "shop-product-loade-infor",
                 options
             });
 
-            shopSectionLoaderWorker.onmessage = (event) => {
+            worker.onmessage = (event) => {
                 let [{value:{categories}}, {value:{amount}}] = event.data;
                 resolve({ status: true , amountAllProduct: amount, categories });
             }
